@@ -30,8 +30,9 @@ const Search = () => {
     url: "https://wft-geo-db.p.rapidapi.com/v1/geo/cities",
     params: { sort: "elevation", namePrefix: wordEntered, limit: "5" },
     headers: {
-      "X-RapidAPI-Key": "",
-      "X-RapidAPI-Host": "",
+      "X-RapidAPI-Key": process.env.REACT_APP_GEO_DB_API_KEY
+      ,
+      "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
     },
   };
 
@@ -40,7 +41,6 @@ const Search = () => {
       .request(options)
       .then(function (response) {
         setSearchData(response.data.data);
-        console.log(searchData);
       })
       .catch(function (error) {
         console.error(error);
@@ -61,7 +61,7 @@ const Search = () => {
           {searchData && searchData.length !== 0 && (
             <>
               {searchData.map((data) => (
-                <div className="search__select-data-item">
+                <div key={data.city} className="search__select-data-item">
                   {data.city}, <span>{data.country}</span>
                 </div>
               ))}
