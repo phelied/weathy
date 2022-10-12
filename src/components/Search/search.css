@@ -1,0 +1,23 @@
+.search {
+  position: absolute;
+  z-index: 25;
+  background-color: red;
+  color: black;
+  border-radius: 15px;
+  height: 400px;
+}
+
+.search__block {
+  margin: 20px 20px;
+}
+
+.search__block-input {
+  width: 70%;
+  border: none;
+}
+
+.search__block-title {
+  font-family: Roboto;
+  font-size: 16px;
+  color: white;
+}

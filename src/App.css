@@ -1,1 +1,57 @@
+:root {
+  --highlight-color: rgb(112, 86, 216);
+}
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("./assets/fonts/Roboto-Regular.ttf");
+  }
+
+html {
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+
+.app {
+    position: absolute;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar__image {
+  height: 100px;
+}
+
+.navbar__link {
+  display: flex;
+  justify-content: space-around;
+  margin-right: 20px;
+  list-style: none;
+}
+.navbar__link-item {
+  font-family: Helvetica;
+  margin-right: 20px;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 3fr 5fr;
+  margin: 0em 1em;
+}
+
+.spline {
+    position: absolute;
+    z-index: 20;
+    height: 86%;
+    width: 80%;
+    left: 20%;
+}

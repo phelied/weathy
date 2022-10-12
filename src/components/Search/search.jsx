@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./search.css";
 
 const Search = () => {
   const [filteredData, setFilteredData] = useState([]);
@@ -10,12 +11,12 @@ const Search = () => {
     // const newFilter = ["me", "moi"].filter((value) => {
     //   return value.title.toLowerCase().includes(searchWord.toLowerCase());
     // });
-    console.log(searchWord)
+    console.log(searchWord);
 
     if (searchWord === "") {
       setFilteredData([]);
     } else {
-    //   setFilteredData(newFilter);
+      //   setFilteredData(newFilter);
     }
   };
 
@@ -25,14 +26,16 @@ const Search = () => {
   };
 
   return (
-    <div>
-      <span>Search your city</span>
-      <input
-        type="text"
-  
-        value={wordEntered}
-        onChange={handleFilter}
-      />
+    <div className="search">
+      <div className="search__block">
+        <span className="search__block-title">Search your city</span>
+        <input
+          type="text"
+          className="search__block-input"
+          value={wordEntered}
+          onChange={handleFilter}
+        />
+      </div>
     </div>
   );
 };
