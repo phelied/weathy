@@ -12,8 +12,8 @@ function App() {
         <nav className='navbar'>
           <img className='navbar__image' src={logo} alt='logo-Weathy' />
           <ul className='navbar__link'>
-            <li className='navbar__link-item'>LinkedIn</li>
-            <li className='navbar__link-item'>Github</li>
+            <li className='navbar__link-item'><a href="https://fr.linkedin.com/in/ophelie-diomar-680162209" target="_blank">LinkedIn</a></li>
+            <li className='navbar__link-item'><a href="https://github.com/phelied/weathy" target="_blank">Github</a></li>
           </ul>
         </nav>
       </header>

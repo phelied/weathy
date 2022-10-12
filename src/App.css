@@ -8,17 +8,26 @@
 }
 
 @font-face {
-    font-family: "Roboto";
-    src: url("./assets/fonts/Roboto-Regular.ttf");
-  }
+  font-family: "Roboto";
+  src: url("./assets/fonts/Roboto-Regular.ttf");
+}
 
 html {
   background-color: rgb(0, 0, 0);
   color: white;
 }
 
+body {
+    overflow: hidden; /* Hide scrollbars */
+  }
+
 .app {
-    position: absolute;
+  position: absolute;
+}
+
+header {
+  position: absolute;
+  width: 100%;
 }
 
 .navbar {
@@ -28,6 +37,8 @@ html {
 }
 
 .navbar__image {
+  position: relative;
+  z-index: 1000;
   height: 100px;
 }
 
@@ -38,8 +49,16 @@ html {
   list-style: none;
 }
 .navbar__link-item {
+  position: relative;
+  z-index: 1000;
   font-family: Helvetica;
   margin-right: 20px;
+}
+
+.navbar__link-item a {
+  display: block;
+  all: unset;
+  cursor: pointer;
 }
 
 main {
@@ -49,9 +68,8 @@ main {
 }
 
 .spline {
-    position: absolute;
-    z-index: 20;
-    height: 86%;
-    width: 80%;
-    left: 20%;
+  position: absolute;
+  z-index: 20;
+  height: 100%;
+  width: 125%;
 }
