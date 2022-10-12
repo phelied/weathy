@@ -1,14 +1,14 @@
 
 import React, { useState, Suspense } from 'react';
 import './App.css';
-import axios from 'axios';
 import Search from './components/Search/search.jsx';
 import Spline from '@splinetool/react-spline';
 import logo from './assets/images/weathy-logo.png';
 import { ColorRing } from 'react-loader-spinner'
 
 function App() {
-  const [loading, setLoading] = useState(false)
+
+
   return (
     <div className="App">
       <header>
@@ -22,19 +22,19 @@ function App() {
       </header>
       <main>
         <Search />
-        <Suspense fallback={<ColorRing
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="blocks-loading"
-          wrapperStyle={{}}
-          wrapperClass="blocks-wrapper"
-          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-        />}>
-          <div className='spline'>
+        <div className='spline'>
+          <Suspense fallback={<ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+          />}>
             <Spline scene="https://prod.spline.design/z8ML-U1cYT2gsIdI/scene.splinecode" />
-          </div>
-        </Suspense>
+          </Suspense>
+        </div>
       </main>
     </div>
   );

@@ -1,40 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./search.css";
 
 const Search = () => {
-  const [filteredData, setFilteredData] = useState([]);
+  const [searchData, setSearchData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
 
-  const handleFilter = (event) => {
-    const searchWord = event.target.value;
-    setWordEntered(searchWord);
-    // const newFilter = ["me", "moi"].filter((value) => {
-    //   return value.title.toLowerCase().includes(searchWord.toLowerCase());
-    // });
-    console.log(searchWord);
-
-    if (searchWord === "") {
-      setFilteredData([]);
-    } else {
-      //   setFilteredData(newFilter);
-    }
-  };
+  const handleClick = () => {};
 
   const clearInput = () => {
-    setFilteredData([]);
+    setSearchData([]);
     setWordEntered("");
+  };
+
+  useEffect(() => {
+    if (wordEntered !== "") {
+      const timer = setTimeout(() => {
+        callApi();
+      }, 700);
+
+      return () => clearTimeout(timer);
+    } else {
+      // clearInput();
+    }
+  }, [wordEntered]);
+
+  const options = {
+    method: "GET",
+    url: "https://wft-geo-db.p.rapidapi.com/v1/geo/cities",
+    params: { sort: "elevation", namePrefix: wordEntered, limit: "5" },
+    headers: {
+      "X-RapidAPI-Key": "",
+      "X-RapidAPI-Host": "",
+    },
+  };
+
+  const callApi = () => {
+    axios
+      .request(options)
+      .then(function (response) {
+        setSearchData(response.data.data);
+        console.log(searchData);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   };
 
   return (
     <div className="search">
       <div className="search__block">
-        <span className="search__block-title">Search your city</span>
+        <span className="search__block-title">SEARCH</span>
         <input
           type="text"
           className="search__block-input"
           value={wordEntered}
-          onChange={handleFilter}
+          onChange={(e) => setWordEntered(e.target.value.trim())}
         />
+        <div className="search__select-data">
+          {searchData && searchData.length !== 0 && (
+            <>
+              {searchData.map((data) => (
+                <div className="search__select-data-item">
+                  {data.city}, <span>{data.country}</span>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
