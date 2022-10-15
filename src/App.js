@@ -2,9 +2,9 @@
 import React, { useState, Suspense } from 'react';
 import './App.css';
 import Search from './components/Search/search.jsx';
-import Spline from '@splinetool/react-spline';
 import logo from './assets/images/weathy-logo.png';
 import { ColorRing } from 'react-loader-spinner'
+import SplineHook from './hooks/3D/spline'
 
 function App() {
 
@@ -32,7 +32,7 @@ function App() {
             wrapperClass="blocks-wrapper"
             colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
           />}>
-            <Spline scene="https://prod.spline.design/z8ML-U1cYT2gsIdI/scene.splinecode" />
+            <SplineHook />
           </Suspense>
         </div>
       </main>

@@ -1,51 +1,29 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import "./search.css";
+import API from "../../hooks/utils/API";
 
 const Search = () => {
-  const [searchData, setSearchData] = useState([]);
+  const [searchedData, setSearchedData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
 
   const handleClick = () => {};
 
   const clearInput = () => {
-    setSearchData([]);
+    setSearchedData([]);
     setWordEntered("");
   };
 
   useEffect(() => {
     if (wordEntered !== "") {
       const timer = setTimeout(() => {
-        callApi();
-      }, 700);
+        API.ApiCities().then((data) => setSearchedData(data));
+      }, 500);
 
       return () => clearTimeout(timer);
     } else {
       // clearInput();
     }
   }, [wordEntered]);
-
-  const options = {
-    method: "GET",
-    url: "https://wft-geo-db.p.rapidapi.com/v1/geo/cities",
-    params: { sort: "elevation", namePrefix: wordEntered, limit: "5" },
-    headers: {
-      "X-RapidAPI-Key": process.env.REACT_APP_GEO_DB_API_KEY
-      ,
-      "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
-    },
-  };
-
-  const callApi = () => {
-    axios
-      .request(options)
-      .then(function (response) {
-        setSearchData(response.data.data);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  };
 
   return (
     <div className="search">
@@ -58,10 +36,10 @@ const Search = () => {
           onChange={(e) => setWordEntered(e.target.value.trim())}
         />
         <div className="search__select-data">
-          {searchData && searchData.length !== 0 && (
+          {searchedData && searchedData.length !== 0 && (
             <>
-              {searchData.map((data) => (
-                <div key={data.city} className="search__select-data-item">
+              {searchedData.map((data, index) => (
+                <div key={data.city + index} className="search__select-data-item">
                   {data.city}, <span>{data.country}</span>
                 </div>
               ))}
