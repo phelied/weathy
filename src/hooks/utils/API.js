@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 export default {
     ApiCities: async (city) => {
         const options = {
