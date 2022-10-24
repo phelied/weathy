@@ -7,29 +7,34 @@ import { ColorRing } from 'react-loader-spinner';
 // import SplineHook from './hooks/3D/spline';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass, faXmark, faWind } from '@fortawesome/free-solid-svg-icons'
 import API from "./hooks/utils/API";
 
-const SplineHook = React.lazy(() => import('./hooks/3D/spline'));
+// const SplineHook = React.lazy(() => import('./hooks/3D/spline'));
 
 function App() {
   const [isActive, setActive] = useState(false);
   const [searchedData, setSearchedData] = useState([]);
   const [weatherData, setWeatherData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
+  const [city, setCity] = useState("");
 
   const capitalizeFirstLetter = (name) => {
     return name.charAt(0).toUpperCase() + name.slice(1);
   };
 
-  const handleClick = (latitude, longitude) => {
-    API.ApiWeather(latitude, longitude).then((data) => setWeatherData(data));
+  const handleClick = (city, latitude, longitude) => {
+    API.ApiWeather(latitude, longitude).then((data) => {
+      setWeatherData(data);
+      setCity(city)
+      clearInput();
+    });
   };
 
-  // const clearInput = () => {
-  //   setSearchedData([]);
-  //   setWordEntered("");
-  // };
+  const clearInput = () => {
+    setSearchedData([]);
+    setWordEntered("");
+  };
 
   useEffect(() => {
     if (wordEntered !== "") {
@@ -38,15 +43,13 @@ function App() {
       }, 500);
 
       return () => clearTimeout(timer);
-    } else {
-      //  clearInput();
     }
   }, [wordEntered]);
 
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function (position) {
-        API.ApiWeather(position.coords.latitude, position.coords.longitude).then((data) => setWeatherData(data));
+        API.ApiWeather(position.coords.latitude, position.coords.longitude).then((data) => { setWeatherData(data) });
       });
     } else {
       console.log("Not Available");
@@ -76,7 +79,7 @@ function App() {
             </button>
 
               <input type="text" className='input-search-open input-search search__block-input'
-                value={wordEntered}
+                value={wordEntered} placeholder="Search for a city"
                 onChange={(e) => setWordEntered(e.target.value.trim())} /> </>)
             :
             (<><button onClick={handleToggle} className='btn-search'><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
@@ -90,7 +93,7 @@ function App() {
                 <div
                   key={data.city + index}
                   className="search__select-data-item"
-                  onClick={() => handleClick(data.latitude, data.longitude)}
+                  onClick={() => handleClick(data.city, data.latitude, data.longitude)}
                 >
                   {capitalizeFirstLetter(data.city)},{" "}
                   <span>{data.country}</span>
@@ -104,20 +107,18 @@ function App() {
         {weatherData && weatherData.length !== 0
           && (
             <div className='main-weather'>
-              <span className='main-weather-city'>{weatherData.timezone}</span>
+              <span className='main-weather-city'>{city ? city : "--"}</span>
               <span className='main-weather-temp'>{Math.round(weatherData.current.temp)}°</span>
               <span className='main-weather-phrase'>{weatherData.daily[0].weather[0].description}</span>
               <div className='main-weather-temp-more'>
                 <span> Min. {Math.round(weatherData.daily[0].temp.min)}°</span>
                 <span>Max. {Math.round(weatherData.daily[0].temp.max)}°</span>
               </div>
-
-              {console.log(weatherData.daily[0].weather[0].description)}
             </div>
           )}
 
         <div className='spline'>
-          {/* <Suspense fallback={<ColorRing
+          <Suspense fallback={<ColorRing
             visible={true}
             height="80"
             width="80"
@@ -126,8 +127,8 @@ function App() {
             wrapperClass="blocks-wrapper"
             colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
           />}>
-            <SplineHook />
-          </Suspense> */}
+            <iframe src='https://my.spline.design/molang3dcopy-a77b38a508355d692790536f2ad9fd1c/' frameBorder='0' width='100%' height='100%'></iframe>
+          </Suspense>
         </div>
       </main>
       {/* <main>
@@ -147,31 +148,40 @@ function App() {
         </div>
       </main>*/}
       <aside className='aside__weather'>
-        <div className='aside__weather-item'>
-          <span className='aside__weather-item-day'>Monday</span>
-          <span className='aside__weather-item-temp'>22°</span>
-          <span className='aside__weather-item-description'>Sunny</span>
-        </div>
-        <div className='aside__weather-item'>
-          <span className='aside__weather-item-day'>Monday</span>
-          <span className='aside__weather-item-temp'>22°</span>
-          <span className='aside__weather-item-description'>Sunny</span>
-        </div>
-        <div className='aside__weather-item'>
-          <span className='aside__weather-item-day'>Monday</span>
-          <span className='aside__weather-item-temp'>22°</span>
-          <span className='aside__weather-item-description'>Sunny</span>
-        </div>
-        <div className='aside__weather-item'>
-          <span className='aside__weather-item-day'>Monday</span>
-          <span className='aside__weather-item-temp'>22°</span>
-          <span className='aside__weather-item-description'>Sunny</span>
-        </div>
-        <div className='aside__weather-item'>
-          <span className='aside__weather-item-day'>Monday</span>
-          <span className='aside__weather-item-temp'>22°</span>
-          <span className='aside__weather-item-description'>Sunny</span>
-        </div>
+        {weatherData && weatherData.length !== 0 ? (
+          weatherData.daily.slice(1, 5).map((day, index) => (
+            <div className='aside__weather-item' key={index}>
+              <span className='aside__weather-item-day'>{new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(new Date(day.dt * 1000))}</span>
+              <img className='aside__weather-item-icon' src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`} />
+              <span className='aside__weather-item-temp'>{Math.round(day.temp.min)}°• {Math.round(day.temp.max)}°</span>
+            </div>
+          ))) :
+          (
+            <><div className='aside__weather-item'>
+              <span className='aside__weather-item-day'>--</span>
+              <span className='aside__weather-item-temp'>--</span>
+              <span className='aside__weather-item-temp'>--</span>
+              <span className='aside__weather-item-description'>--</span>
+            </div>
+              <div className='aside__weather-item'>
+                <span className='aside__weather-item-day'>--</span>
+                <span className='aside__weather-item-temp'>--</span>
+                <span className='aside__weather-item-temp'>--</span>
+                <span className='aside__weather-item-description'>--</span>
+              </div>
+              <div className='aside__weather-item'>
+                <span className='aside__weather-item-day'>--</span>
+                <span className='aside__weather-item-temp'>--</span>
+                <span className='aside__weather-item-temp'>--</span>
+                <span className='aside__weather-item-description'>--</span>
+              </div>
+              <div className='aside__weather-item'>
+                <span className='aside__weather-item-day'>--</span>
+                <span className='aside__weather-item-temp'>--</span>
+                <span className='aside__weather-item-temp'>--</span>
+                <span className='aside__weather-item-description'>--</span>
+              </div></>)
+        }
       </aside>
       <footer>
         <li className='navbar__link-item'><a href="https://fr.linkedin.com/in/ophelie-diomar-680162209" target="_blank" rel="noreferrer">LinkedIn</a></li>
