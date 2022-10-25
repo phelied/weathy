@@ -22,7 +22,7 @@
   src: url("./assets/fonts/Roboto-Bold.ttf");
 }
 html {
-  background-color: #ffd2d2;
+  background-color: #87ceeb;
   color: white;
 }
 
@@ -108,6 +108,10 @@ main {
   background-color: transparent;
   pointer-events: painted;
 }
+
+.btn-localisation {
+  right: 45px;
+}
 .btn-search-open ~ .input-search,
 .input-search-open {
   width: 320px;
@@ -178,6 +182,12 @@ main {
   display: flex;
   justify-content: space-between;
   padding: 0.7em;
+  align-items: center;
+  font-weight: 700;
+}
+
+.aside__weather-item span:first-child {
+  width: 140px;
 }
 
 a .spline-watermark {
@@ -188,9 +198,13 @@ a .spline-watermark {
 
 footer {
   display: flex;
-  justify-content: space-around;
-  margin-right: 20px;
+  justify-content: flex-end;
   list-style: none;
+}
+
+footer > .navbar__link-item svg {
+  height: 30px;
+  margin: 0px 20px;
 }
 
 @media (min-width: 768px) {
