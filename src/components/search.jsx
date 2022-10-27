@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./search.css";
+import "../styles/search.css";
 import API from "../../hooks/utils/API";
 
 const Search = () => {
