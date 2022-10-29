@@ -7,8 +7,8 @@ import { ColorRing } from 'react-loader-spinner';
 // import SplineHook from './hooks/3D/spline';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass, faXmark, faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import { faSquareGithub } from '@fortawesome/free-brands-svg-icons'
+import { faMagnifyingGlass, faXmark, faLocationDot, faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faSquareGithub } from '@fortawesome/free-brands-svg-icons';
 import API from "./hooks/utils/API";
 
 // const SplineHook = React.lazy(() => import('./hooks/3D/spline'));
@@ -84,35 +84,30 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="app">
       <header>
-        {/* <nav className='navbar'>
-          <img className='navbar__image' src={logo} alt='logo-Weathy' />
-          <ul className='navbar__link'>
-            <li className='navbar__link-item'><a href="https://fr.linkedin.com/in/ophelie-diomar-680162209" target="_blank" rel="noreferrer">LinkedIn</a></li>
-            <li className='navbar__link-item'><a href="https://github.com/phelied/weathy" target="_blank" rel="noreferrer">Github</a></li>
-          </ul>
-        </nav> */}
-        <div className="search-box">
-          {isActive ? (
-            <><button className='btn-search-open btn-search' onClick={handleToggle}>
-              <FontAwesomeIcon icon={faXmark} />
-            </button>
-
-              <input type="text" className='input-search-open input-search search__block-input'
-                value={wordEntered} placeholder="Search for a city"
-                onChange={(e) => setWordEntered(e.target.value.trim())} /> </>)
-            :
-            (<>
-              <button onClick={askLocalisationUser} className='btn-search btn-localisation'>
-                <FontAwesomeIcon icon={faLocationDot} />
-              </button><button onClick={handleToggle} className='btn-search'>
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
+        <nav className='navbar'>
+          <div className="search-box">
+            {isActive ? (
+              <><button className='btn-search-open btn-search' onClick={handleToggle}>
+                <FontAwesomeIcon icon={faXmark} />
               </button>
 
-              <input type="text" className='input-search' value={wordEntered}
-                onChange={(e) => setWordEntered(e.target.value.trim())} /></>)}
-        </div>
+                <input type="text" className='input-search-open input-search search__block-input'
+                  value={wordEntered} placeholder="Search for a city"
+                  onChange={(e) => setWordEntered(e.target.value.trim())} /> </>)
+              :
+              (<>
+                <button onClick={askLocalisationUser} className='btn-search btn-localisation'>
+                  <FontAwesomeIcon icon={faLocationDot} />
+                </button><button onClick={handleToggle} className='btn-search'>
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </button>
+
+                <input type="text" className='input-search' value={wordEntered}
+                  onChange={(e) => setWordEntered(e.target.value.trim())} /></>)}
+          </div>
+        </nav>
         <div className="search__select-data">
           {searchedData && searchedData.length !== 0 && (
             <>
@@ -131,19 +126,40 @@ function App() {
         </div>
       </header>
       <main>
-        {weatherData && weatherData.length !== 0
-          && (
-            <div className='main-weather'>
-              <span className='main-weather-city'>{city ? city : "--"}</span>
-              <span className='main-weather-temp'>{Math.round(weatherData.current.temp)}°</span>
-              <span className='main-weather-phrase'>{weatherData.daily[0].weather[0].description}</span>
-              <div className='main-weather-temp-more'>
-                <span> Min. {Math.round(weatherData.daily[0].temp.min)}°</span>
-                <span>Max. {Math.round(weatherData.daily[0].temp.max)}°</span>
-              </div>
+        {/* {weatherData && weatherData.length !== 0
+          && ( */}
+        {/* <div className='main-weather-current'>
+          <span className='main-weather-current--city'>{city ? city : "LONDON"}</span>
+          <span className='main-weather-current--temp'>{Math.round(weatherData.current.temp)}°</span>
+          <span className='main-weather-current--phrase'>{weatherData.daily[0].weather[0].description}</span>
+          <div className='main-weather-current--temp-range'>
+            <div className='main-weather-current--temp-min'>
+              <FontAwesomeIcon icon={faArrowDown} />
+              <span> Min. {Math.round(weatherData.daily[0].temp.min)}°</span>
             </div>
-          )}
+            <div className='main-weather-current--temp-max'>
+              <FontAwesomeIcon icon={faArrowUp} />
+              <span>Max. {Math.round(weatherData.daily[0].temp.max)}°</span>
+            </div>
+          </div>
+        </div> */}
+        {/* )} */}
 
+        <div className='main-weather-current'>
+          <span className='main-weather-current--city'>{city ? city : "LONDON"}</span>
+          <span className='main-weather-current--temp'>19°</span>
+          <span className='main-weather-current--phrase'>Cloudy</span>
+          <div className='main-weather-current--temp-range'>
+            <div className='main-weather-current--temp-min'>
+              <FontAwesomeIcon icon={faArrowDown} />
+              <span>12°</span>
+            </div>
+            <div className='main-weather-current--temp-max'>
+              <FontAwesomeIcon icon={faArrowUp} />
+              <span>29°</span>
+            </div>
+          </div>
+        </div>
         <div className='spline'>
           <Suspense fallback={<ColorRing
             visible={true}
@@ -154,68 +170,58 @@ function App() {
             wrapperClass="blocks-wrapper"
             colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
           />}>
-            <iframe title="3D Design" src='https://my.spline.design/molang3dcopy-a77b38a508355d692790536f2ad9fd1c/' frameBorder='0' width='100%' height='100%'></iframe>
+            <iframe title="3D Design" src='https://my.spline.design/molang3dcopy-a77b38a508355d692790536f2ad9fd1c/' frameBorder='0' width='100%' height='100%' />
           </Suspense>
+        </div>
+
+        <div className='forecast-weather'>
+          {weatherData && weatherData.length !== 0 ? (
+            weatherData.daily.slice(1, 5).map((day, index) => (
+              <div className='forecast-weather-item' key={index}>
+                <span className='forecast-weather-item-day'>{new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(new Date(day.dt * 1000)).substring(0, 4)}.</span>
+                <img className='forecast-weather-item-icon' alt='weather-icon' src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`} />
+                <span className='forecast-weather-item-temp'>{Math.round(day.temp.min)}°• {Math.round(day.temp.max)}°</span>
+              </div>
+            ))) :
+            (
+              <><div className='forecast-weather-item'>
+                <span className='forecast-weather-item-day'>--</span>
+                <span className='forecast-weather-item-temp'>--</span>
+                <span className='forecast-weather-item-temp'>--</span>
+                <span className='forecast-weather-item-description'>--</span>
+              </div>
+              </>)
+          }
+        </div>
+        <div className='more-current-weather'>
+          <div className='more-current-weather-item'>
+            <span className='more-current-weather-item-title'>WIND</span>
+            <img src={require("./assets/images/icons/vent.png")} alt="wind" />
+            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "--"} <span>km/h</span></span>
+          </div>
+          <div className='more-current-weather-item'>
+            <span className='more-current-weather-item-title'>HUMIDITY</span>
+            <img src={require("./assets/images/icons/humidite.png")} alt="humidity" />
+            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "--"} <span>%</span></span>
+          </div>
+          <div className='more-current-weather-item'>
+            <span className='more-current-weather-item-title'>PRESSURE</span>
+            <img src={require("./assets/images/icons/jauge.png")} alt="pressure" />
+            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "--"} <span>hPa</span></span>
+          </div>
+          <div className='more-current-weather-item'>
+            <span className='more-current-weather-item-title'>FEELS LIKE</span>
+            <img src={require("./assets/images/icons/thermometre.png")} alt="temperature" />
+            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "--"} <span>°</span></span>
+          </div>
         </div>
       </main>
-      {/* <main>
-        <Search />
-        <div className='spline'>
-          <Suspense fallback={<ColorRing
-            visible={true}
-            height="80"
-            width="80"
-            ariaLabel="blocks-loading"
-            wrapperStyle={{}}
-            wrapperClass="blocks-wrapper"
-            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-          />}>
-            <SplineHook />
-          </Suspense>
-        </div>
-      </main>*/}
-      <aside className='aside__weather'>
-        {weatherData && weatherData.length !== 0 ? (
-          weatherData.daily.slice(1, 5).map((day, index) => (
-            <div className='aside__weather-item' key={index}>
-              <span className='aside__weather-item-day'>{new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(new Date(day.dt * 1000)).substring(0, 4)}.</span>
-              <img className='aside__weather-item-icon' alt='weather-icon' src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`} />
-              <span className='aside__weather-item-temp'>{Math.round(day.temp.min)}°• {Math.round(day.temp.max)}°</span>
-            </div>
-          ))) :
-          (
-            <><div className='aside__weather-item'>
-              <span className='aside__weather-item-day'>--</span>
-              <span className='aside__weather-item-temp'>--</span>
-              <span className='aside__weather-item-temp'>--</span>
-              <span className='aside__weather-item-description'>--</span>
-            </div>
-              <div className='aside__weather-item'>
-                <span className='aside__weather-item-day'>--</span>
-                <span className='aside__weather-item-temp'>--</span>
-                <span className='aside__weather-item-temp'>--</span>
-                <span className='aside__weather-item-description'>--</span>
-              </div>
-              <div className='aside__weather-item'>
-                <span className='aside__weather-item-day'>--</span>
-                <span className='aside__weather-item-temp'>--</span>
-                <span className='aside__weather-item-temp'>--</span>
-                <span className='aside__weather-item-description'>--</span>
-              </div>
-              <div className='aside__weather-item'>
-                <span className='aside__weather-item-day'>--</span>
-                <span className='aside__weather-item-temp'>--</span>
-                <span className='aside__weather-item-temp'>--</span>
-                <span className='aside__weather-item-description'>--</span>
-              </div></>)
-        }
-      </aside>
       <footer>
-        <span className='navbar__link-item'>
+        <nav className='nav-footer__link'>
           <a href="https://github.com/phelied/weathy" target="_blank" rel="noreferrer">
             <FontAwesomeIcon icon={faSquareGithub} />
           </a>
-        </span>
+        </nav>
       </footer>
     </div>
   );
