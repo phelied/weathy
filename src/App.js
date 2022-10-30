@@ -3,6 +3,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import './App.css';
 // import Search from './components/Search/search.jsx';
 // import logo from './assets/images/weathy-logo.png';
+import BunnyGif from './assets/images/bunny-copy.gif';
 import { ColorRing } from 'react-loader-spinner';
 // import SplineHook from './hooks/3D/spline';
 
@@ -86,28 +87,30 @@ function App() {
   return (
     <div className="app">
       <header>
-        <nav className='navbar'>
-          <div className="search-box">
-            {isActive ? (
-              <><button className='btn-search-open btn-search' onClick={handleToggle}>
-                <FontAwesomeIcon icon={faXmark} />
-              </button>
-
-                <input type="text" className='input-search-open input-search search__block-input'
-                  value={wordEntered} placeholder="Search for a city"
-                  onChange={(e) => setWordEntered(e.target.value.trim())} /> </>)
-              :
-              (<>
-                <button onClick={askLocalisationUser} className='btn-search btn-localisation'>
-                  <FontAwesomeIcon icon={faLocationDot} />
-                </button><button onClick={handleToggle} className='btn-search'>
-                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+        <div>
+          <nav className='navbar'>
+            <div className="search-box">
+              {isActive ? (
+                <><button className='btn-search-open btn-search' onClick={handleToggle}>
+                  <FontAwesomeIcon icon={faXmark} />
                 </button>
 
-                <input type="text" className='input-search' value={wordEntered}
-                  onChange={(e) => setWordEntered(e.target.value.trim())} /></>)}
-          </div>
-        </nav>
+                  <input type="text" className='input-search-open input-search search__block-input'
+                    value={wordEntered} placeholder="Search for a city"
+                    onChange={(e) => setWordEntered(e.target.value.trim())} /> </>)
+                :
+                (<>
+                  <button onClick={askLocalisationUser} className='btn-search btn-localisation'>
+                    <FontAwesomeIcon icon={faLocationDot} />
+                  </button><button onClick={handleToggle} className='btn-search'>
+                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                  </button>
+
+                  <input type="text" className='input-search' value={wordEntered}
+                    onChange={(e) => setWordEntered(e.target.value.trim())} /></>)}
+            </div>
+          </nav>
+     
         <div className="search__select-data">
           {searchedData && searchedData.length !== 0 && (
             <>
@@ -123,6 +126,22 @@ function App() {
               ))}
             </>
           )}
+        </div>
+        </div>
+        <div className='main-weather-current'>
+          <span className='main-weather-current--city'>{city ? city : "LONDON"}</span>
+          <span className='main-weather-current--temp'>19°</span>
+          <span className='main-weather-current--phrase'>Cloudy</span>
+          <div className='main-weather-current--temp-range'>
+            <div className='main-weather-current--temp-min'>
+              <FontAwesomeIcon icon={faArrowDown} />
+              <span>12°</span>
+            </div>
+            <div className='main-weather-current--temp-max'>
+              <FontAwesomeIcon icon={faArrowUp} />
+              <span>29°</span>
+            </div>
+          </div>
         </div>
       </header>
       <main>
@@ -144,36 +163,9 @@ function App() {
           </div>
         </div> */}
         {/* )} */}
-
-        <div className='main-weather-current'>
-          <span className='main-weather-current--city'>{city ? city : "LONDON"}</span>
-          <span className='main-weather-current--temp'>19°</span>
-          <span className='main-weather-current--phrase'>Cloudy</span>
-          <div className='main-weather-current--temp-range'>
-            <div className='main-weather-current--temp-min'>
-              <FontAwesomeIcon icon={faArrowDown} />
-              <span>12°</span>
-            </div>
-            <div className='main-weather-current--temp-max'>
-              <FontAwesomeIcon icon={faArrowUp} />
-              <span>29°</span>
-            </div>
-          </div>
-        </div>
         <div className='spline'>
-          <Suspense fallback={<ColorRing
-            visible={true}
-            height="80"
-            width="80"
-            ariaLabel="blocks-loading"
-            wrapperStyle={{}}
-            wrapperClass="blocks-wrapper"
-            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-          />}>
-            <iframe title="3D Design" src='https://my.spline.design/molang3dcopy-a77b38a508355d692790536f2ad9fd1c/' frameBorder='0' width='100%' height='100%' />
-          </Suspense>
+          <img className="spline-img" src={BunnyGif} alt="bunny gif" />
         </div>
-
         <div className='forecast-weather'>
           {weatherData && weatherData.length !== 0 ? (
             weatherData.daily.slice(1, 5).map((day, index) => (
@@ -185,11 +177,21 @@ function App() {
             ))) :
             (
               <><div className='forecast-weather-item'>
-                <span className='forecast-weather-item-day'>--</span>
-                <span className='forecast-weather-item-temp'>--</span>
-                <span className='forecast-weather-item-temp'>--</span>
-                <span className='forecast-weather-item-description'>--</span>
+                <span className='forecast-weather-item-day'>JEU.</span>
+                <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
+                <span className='forecast-weather-item-temp'>22°/34°</span>
+                <span className='forecast-weather-item-feels-like'>23°</span>
+                <span className='forecast-weather-item-wind'>8KM/H</span>
+                <span className='forecast-weather-item-humidity'>7%</span>
               </div>
+                <div className='forecast-weather-item'>
+                  <span className='forecast-weather-item-day'>VEN.</span>
+                  <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
+                  <span className='forecast-weather-item-temp'>22°/34°</span>
+                  <span className='forecast-weather-item-feels-like'>23°</span>
+                  <span className='forecast-weather-item-wind'>8KM/H</span>
+                  <span className='forecast-weather-item-humidity'>7%</span>
+                </div>
               </>)
           }
         </div>
@@ -197,22 +199,32 @@ function App() {
           <div className='more-current-weather-item'>
             <span className='more-current-weather-item-title'>WIND</span>
             <img src={require("./assets/images/icons/vent.png")} alt="wind" />
-            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "--"} <span>km/h</span></span>
+            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "8"} <span>km/h</span></span>
           </div>
           <div className='more-current-weather-item'>
             <span className='more-current-weather-item-title'>HUMIDITY</span>
             <img src={require("./assets/images/icons/humidite.png")} alt="humidity" />
-            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "--"} <span>%</span></span>
+            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "12"} <span>%</span></span>
           </div>
           <div className='more-current-weather-item'>
             <span className='more-current-weather-item-title'>PRESSURE</span>
             <img src={require("./assets/images/icons/jauge.png")} alt="pressure" />
-            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "--"} <span>hPa</span></span>
+            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "1024"} <span>hPa</span></span>
           </div>
           <div className='more-current-weather-item'>
             <span className='more-current-weather-item-title'>FEELS LIKE</span>
             <img src={require("./assets/images/icons/thermometre.png")} alt="temperature" />
-            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "--"} <span>°</span></span>
+            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "23"} <span>°</span></span>
+          </div>
+          <div className='more-current-weather-item weather-item-clouds'>
+            <span className='more-current-weather-item-title'>FEELS LIKE</span>
+            <img src={require("./assets/images/icons/thermometre.png")} alt="temperature" />
+            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "23"} <span>°</span></span>
+          </div>
+          <div className='more-current-weather-item weather-item-uv'>
+            <span className='more-current-weather-item-title'>FEELS LIKE</span>
+            <img src={require("./assets/images/icons/thermometre.png")} alt="temperature" />
+            <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "23"} <span>°</span></span>
           </div>
         </div>
       </main>
