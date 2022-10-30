@@ -110,23 +110,23 @@ function App() {
                     onChange={(e) => setWordEntered(e.target.value.trim())} /></>)}
             </div>
           </nav>
-     
-        <div className="search__select-data">
-          {searchedData && searchedData.length !== 0 && (
-            <>
-              {searchedData.map((data, index) => (
-                <div
-                  key={data.city + index}
-                  className="search__select-data-item"
-                  onClick={() => handleClick(data.city, data.latitude, data.longitude)}
-                >
-                  {capitalizeFirstLetter(data.city)},{" "}
-                  <span>{data.country}</span>
-                </div>
-              ))}
-            </>
-          )}
-        </div>
+
+          <div className="search__select-data">
+            {searchedData && searchedData.length !== 0 && (
+              <>
+                {searchedData.map((data, index) => (
+                  <div
+                    key={data.city + index}
+                    className="search__select-data-item"
+                    onClick={() => handleClick(data.city, data.latitude, data.longitude)}
+                  >
+                    {capitalizeFirstLetter(data.city)},{" "}
+                    <span>{data.country}</span>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
         </div>
         <div className='main-weather-current'>
           <span className='main-weather-current--city'>{city ? city : "LONDON"}</span>
@@ -184,6 +184,22 @@ function App() {
                 <span className='forecast-weather-item-wind'>8KM/H</span>
                 <span className='forecast-weather-item-humidity'>7%</span>
               </div>
+                <div className='forecast-weather-item'>
+                  <span className='forecast-weather-item-day'>VEN.</span>
+                  <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
+                  <span className='forecast-weather-item-temp'>22°/34°</span>
+                  <span className='forecast-weather-item-feels-like'>23°</span>
+                  <span className='forecast-weather-item-wind'>8KM/H</span>
+                  <span className='forecast-weather-item-humidity'>7%</span>
+                </div>
+                <div className='forecast-weather-item'>
+                  <span className='forecast-weather-item-day'>VEN.</span>
+                  <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
+                  <span className='forecast-weather-item-temp'>22°/34°</span>
+                  <span className='forecast-weather-item-feels-like'>23°</span>
+                  <span className='forecast-weather-item-wind'>8KM/H</span>
+                  <span className='forecast-weather-item-humidity'>7%</span>
+                </div>
                 <div className='forecast-weather-item'>
                   <span className='forecast-weather-item-day'>VEN.</span>
                   <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
