@@ -232,13 +232,13 @@ function App() {
             <img src={require("./assets/images/icons/thermometre.png")} alt="temperature" />
             <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "23"} <span>°</span></span>
           </div>
-          <div className='more-current-weather-item weather-item-clouds'>
-            <span className='more-current-weather-item-title'>FEELS LIKE</span>
+          <div className='more-current-weather-item'>
+            <span className='more-current-weather-item-title'>CLOUDS</span>
             <img src={require("./assets/images/icons/thermometre.png")} alt="temperature" />
             <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "23"} <span>°</span></span>
           </div>
-          <div className='more-current-weather-item weather-item-uv'>
-            <span className='more-current-weather-item-title'>FEELS LIKE</span>
+          <div className='more-current-weather-item'>
+            <span className='more-current-weather-item-title'>UV</span>
             <img src={require("./assets/images/icons/thermometre.png")} alt="temperature" />
             <span className='more-current-weather-item-value'>{weatherData && weatherData.length !== 0 ? weatherData.current.wind_speed : "23"} <span>°</span></span>
           </div>
