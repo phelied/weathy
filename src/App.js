@@ -1,10 +1,9 @@
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 // import Search from './components/Search/search.jsx';
 // import logo from './assets/images/weathy-logo.png';
 import BunnyGif from './assets/images/bunny-copy.gif';
-import { ColorRing } from 'react-loader-spinner';
 // import SplineHook from './hooks/3D/spline';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -87,7 +86,7 @@ function App() {
   return (
     <div className="app">
       <header>
-        <div>
+        <div className='container-search'>
           <nav className='navbar'>
             <div className="search-box">
               {isActive ? (
@@ -180,33 +179,69 @@ function App() {
                 <span className='forecast-weather-item-day'>JEU.</span>
                 <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
                 <span className='forecast-weather-item-temp'>22°/34°</span>
-                <span className='forecast-weather-item-feels-like'>23°</span>
-                <span className='forecast-weather-item-wind'>8KM/H</span>
-                <span className='forecast-weather-item-humidity'>7%</span>
+                <div className="forecast-weather-item-feels-like">
+                  <span className='forecast-weather-item-title'>FEELS LIKE</span>
+                  <span className='forecast-weather-item-value'>23°</span>
+                </div>
+                <div className='forecast-weather-item-wind'>
+                  <span className='forecast-weather-item-title'>WIND</span>
+                  <span className='forecast-weather-item-value'>8KM/H</span>
+                </div>
+                <div className="forecast-weather-item-humidity">
+                  <span className='forecast-weather-item-title'>HUMIDITY</span>
+                  <span className='forecast-weather-item-value'>23%</span>
+                </div>
               </div>
                 <div className='forecast-weather-item'>
                   <span className='forecast-weather-item-day'>VEN.</span>
                   <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
                   <span className='forecast-weather-item-temp'>22°/34°</span>
-                  <span className='forecast-weather-item-feels-like'>23°</span>
-                  <span className='forecast-weather-item-wind'>8KM/H</span>
-                  <span className='forecast-weather-item-humidity'>7%</span>
+                  <div className="forecast-weather-item-feels-like">
+                    <span className='forecast-weather-item-title'>FEELS LIKE</span>
+                    <span className='forecast-weather-item-value'>23°</span>
+                  </div>
+                  <div className='forecast-weather-item-wind'>
+                    <span className='forecast-weather-item-title'>WIND</span>
+                    <span className='forecast-weather-item-value'>8KM/H</span>
+                  </div>
+                  <div className="forecast-weather-item-humidity">
+                    <span className='forecast-weather-item-title'>HUMIDITY</span>
+                    <span className='forecast-weather-item-value'>23%</span>
+                  </div>
                 </div>
                 <div className='forecast-weather-item'>
                   <span className='forecast-weather-item-day'>VEN.</span>
                   <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
                   <span className='forecast-weather-item-temp'>22°/34°</span>
-                  <span className='forecast-weather-item-feels-like'>23°</span>
-                  <span className='forecast-weather-item-wind'>8KM/H</span>
-                  <span className='forecast-weather-item-humidity'>7%</span>
+                  <div className="forecast-weather-item-feels-like">
+                    <span className='forecast-weather-item-title'>FEELS LIKE</span>
+                    <span className='forecast-weather-item-value'>23°</span>
+                  </div>
+                  <div className='forecast-weather-item-wind'>
+                    <span className='forecast-weather-item-title'>WIND</span>
+                    <span className='forecast-weather-item-value'>8KM/H</span>
+                  </div>
+                  <div className="forecast-weather-item-humidity">
+                    <span className='forecast-weather-item-title'>HUMIDITY</span>
+                    <span className='forecast-weather-item-value'>23%</span>
+                  </div>
                 </div>
                 <div className='forecast-weather-item'>
                   <span className='forecast-weather-item-day'>VEN.</span>
                   <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
                   <span className='forecast-weather-item-temp'>22°/34°</span>
-                  <span className='forecast-weather-item-feels-like'>23°</span>
-                  <span className='forecast-weather-item-wind'>8KM/H</span>
-                  <span className='forecast-weather-item-humidity'>7%</span>
+                  <div className="forecast-weather-item-feels-like">
+                    <span className='forecast-weather-item-title'>FEELS LIKE</span>
+                    <span className='forecast-weather-item-value'>23°</span>
+                  </div>
+                  <div className='forecast-weather-item-wind'>
+                    <span className='forecast-weather-item-title'>WIND</span>
+                    <span className='forecast-weather-item-value'>8KM/H</span>
+                  </div>
+                  <div className="forecast-weather-item-humidity">
+                    <span className='forecast-weather-item-title'>HUMIDITY</span>
+                    <span className='forecast-weather-item-value'>23%</span>
+                  </div>
                 </div>
               </>)
           }

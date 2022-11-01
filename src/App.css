@@ -19,18 +19,15 @@
 
 .app {
   background: linear-gradient(179.79deg, #66adef 66.86%, #d7e3e9 115.4%);
+  background-repeat: no-repeat;
   color: white;
+  padding: 1em 20px;
 }
 
 header {
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
-}
-
-main {
-  height: 75vh;
-  margin: 1em 20px;
 }
 
 .main-weather-current {
@@ -110,7 +107,7 @@ main {
 }
 
 .btn-search {
-  width: 50px;
+  width: 30px;
   height: 50px;
   border-style: none;
   font-size: 20px;
@@ -224,8 +221,8 @@ iframe {
   font-family: Inter;
 }
 
-.forecast-weather-item span:first-child {
-  width: 140px;
+.forecast-weather-item > span:first-child {
+  width: 100px;
 }
 
 .more-current-weather {
@@ -291,16 +288,17 @@ footer > .nav-footer__link svg {
     padding-top: 30px;
   }
 
+  .container-search {
+    background-color: rgba(172, 207, 236, 0.577);
+    border-radius: 8px;
+    margin-left: 20px;
+    width: 74vh;
+  }
+
   header {
     padding-top: 12px;
     flex-direction: row-reverse;
     justify-content: space-around;
-  }
-
-  header > div {
-    border-radius: 8px;
-    margin: 0px 20px;
-    width: 74vh;
   }
 
   main {
@@ -314,12 +312,17 @@ footer > .nav-footer__link svg {
     grid-row: 1;
   }
 
+  .search-box {
+    margin-right: 10px;
+  }
+
   .more-current-weather {
     grid-column: 1 / 2;
     grid-row: 1;
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: repeat(3, 110px);
+    grid-template-columns: repeat(3, 1fr);
+    margin-right: 20px;
   }
 
   .forecast-weather {
@@ -329,6 +332,7 @@ footer > .nav-footer__link svg {
     height: 85%;
     display: grid;
     grid-template-rows: repeat(4, 1fr);
+    color: white;
   }
 
   .forecast-weather-item {
@@ -404,11 +408,18 @@ footer > .nav-footer__link svg {
   .forecast-weather-item-feels-like,
   .forecast-weather-item-wind,
   .forecast-weather-item-humidity {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    width: max-content;
   }
 
-  .forecast-weather {
-    color: white;
+  .forecast-weather-item-title {
+    color: #e8e2e2;
+    text-align: center;
+  }
+
+  .forecast-weather-item-value {
+    text-align: center;
   }
 
   .spline {
