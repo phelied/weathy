@@ -18,10 +18,53 @@
 }
 
 .app {
-  background: linear-gradient(179.79deg, #66adef 66.86%, #d7e3e9 115.4%);
   background-repeat: no-repeat;
+  background-position: center;
   color: white;
-  padding: 1em 20px;
+  padding: 1em 6%;
+
+  /* matin*/
+  /* background: linear-gradient(
+    179.79deg,
+    #66adef 66.86%,
+    ƒ#d7e3e9 115.4%); */
+
+  /* evening */
+  /* background: linear-gradient(
+    178.65deg,
+     rgba(73, 53, 116, 0.96) -44.21%,
+      #2784C7 48.62%,
+       #C1875D 98.51%,
+       rgba(233, 192, 48, 0.37) 112.19%); */
+
+  /* soir */
+  background: linear-gradient(
+    178.5deg,
+    #092754 45.53%,
+    #25498b 95.09%,
+    rgba(21, 132, 234, 0.48) 113.44%
+  );
+
+  /* little cloudy */
+  /* background: linear-gradient(
+    179.79deg,
+     #ABBCCC 66.86%,
+      #D7E5EB 115.4%);*/
+
+  /* cloudy */
+
+  /* background: linear-gradient(
+    0deg,
+     rgba(0, 0, 0, 0.2),
+     rgba(0, 0, 0, 0.2)),
+    linear-gradient(
+      177.53deg,
+      #d7e3ed -0.58%,
+      #8a8e91 17.58%,
+      #8196a9 50.62%,
+      #66adef 107.75%,
+      #d7e3e9 112.82%
+    ); */
 }
 
 header {
@@ -36,6 +79,18 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.main-weather-current--temp-min > svg > path {
+  color: rgb(241, 102, 38);
+}
+
+.main-weather-current--temp-max > svg > path {
+  color: rgb(46, 160, 46);
+}
+
+svg > path {
+  color: white;
 }
 
 .main-weather-current--city {
@@ -96,8 +151,12 @@ header {
 }
 
 .forecast-weather-item img {
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
+}
+
+.forecast-weather-rest-day {
+  display: none;
 }
 
 .forecast-weather-item-feels-like,
@@ -138,7 +197,7 @@ header > div > .navbar {
 
 .btn-search-open ~ .input-search,
 .input-search-open {
-  width: 320px;
+  width: 70vw;
   border-radius: 0px;
   background-color: transparent;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
@@ -189,7 +248,7 @@ header > div > .navbar {
 
 .spline img {
   border-radius: 8px;
-  height: 100%;
+  height: 104%;
   width: 100%;
 }
 
@@ -222,7 +281,9 @@ iframe {
 }
 
 .forecast-weather-item > span:first-child {
-  width: 100px;
+  width: 16vw;
+  font-family: Inter Bold;
+  font-size: 5vw;
 }
 
 .more-current-weather {
@@ -248,21 +309,21 @@ iframe {
 }
 
 .more-current-weather-item-title {
-  font-size: 14px;
+  font-size: 3.75vw;
 }
 
 .more-current-weather-item img {
-  width: 30px;
+  width: 6.5vw;
 }
 
 .more-current-weather-item-value {
-  font-size: 32px;
+  font-size: 6vw;
   line-height: 39px;
   width: max-content;
 }
 
 .more-current-weather-item-value span {
-  font-size: 22px;
+  font-size: 4vw;
   line-height: 27px;
   color: #e3e3e3;
 }
@@ -286,6 +347,15 @@ footer > .nav-footer__link svg {
 @media (min-width: 768px) {
   .app {
     padding-top: 30px;
+  }
+
+  .forecast-weather-rest-day {
+    display: inline-block;
+  }
+
+  .btn-search-open ~ .input-search,
+  .input-search-open {
+    width: 42vw;
   }
 
   .container-search {
@@ -323,6 +393,7 @@ footer > .nav-footer__link svg {
     grid-gap: 10px;
     grid-template-columns: repeat(3, 1fr);
     margin-right: 20px;
+    min-width: 100px;
   }
 
   .forecast-weather {
@@ -337,6 +408,10 @@ footer > .nav-footer__link svg {
 
   .forecast-weather-item {
     align-items: center;
+  }
+
+  .forecast-weather-item > span:first-child {
+    font-size: 2vw;
   }
 
   .main-weather-current {
@@ -395,6 +470,7 @@ footer > .nav-footer__link svg {
   .more-current-weather-item-title {
     display: block;
     height: 25px;
+    font-size: 1.75vw;
   }
 
   .more-current-weather-item img {
@@ -426,9 +502,37 @@ footer > .nav-footer__link svg {
     grid-row: 1;
     height: 85%;
   }
+
+  .forecast-weather-item img {
+    height: 50px;
+    width: 50px;
+  }
 }
 
 @media (min-width: 992px) {
+  .forecast-weather-item img {
+    height: 50px;
+    width: 50px;
+  }
+
+  .app {
+    padding: 1em 7%;
+  }
+
+  .more-current-weather-item img {
+    display: block;
+    width: 30px;
+    height: 30px;
+  }
+
+  .main-weather-current {
+    width: 32vw;
+  }
+
+  .container-search {
+    width: 68vh;
+    margin-left: 6vw;
+  }
 }
 
 @media (min-width: 1200px) {

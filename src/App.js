@@ -176,9 +176,9 @@ function App() {
             ))) :
             (
               <><div className='forecast-weather-item'>
-                <span className='forecast-weather-item-day'>JEU.</span>
+                <span className='forecast-weather-item-day'>JEU. <span className='forecast-weather-rest-day'>11 OCT.</span></span>
                 <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
-                <span className='forecast-weather-item-temp'>22°/34°</span>
+                <span className='forecast-weather-item-temp'>22° ••• 34°</span>
                 <div className="forecast-weather-item-feels-like">
                   <span className='forecast-weather-item-title'>FEELS LIKE</span>
                   <span className='forecast-weather-item-value'>23°</span>
@@ -193,9 +193,9 @@ function App() {
                 </div>
               </div>
                 <div className='forecast-weather-item'>
-                  <span className='forecast-weather-item-day'>VEN.</span>
+                  <span className='forecast-weather-item-day'>VEN. <span className='forecast-weather-rest-day'>11 OCT.</span></span>
                   <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
-                  <span className='forecast-weather-item-temp'>22°/34°</span>
+                  <span className='forecast-weather-item-temp'>22° ••• 34°</span>
                   <div className="forecast-weather-item-feels-like">
                     <span className='forecast-weather-item-title'>FEELS LIKE</span>
                     <span className='forecast-weather-item-value'>23°</span>
@@ -210,9 +210,9 @@ function App() {
                   </div>
                 </div>
                 <div className='forecast-weather-item'>
-                  <span className='forecast-weather-item-day'>VEN.</span>
+                  <span className='forecast-weather-item-day'>SAM. <span className='forecast-weather-rest-day'>11 OCT.</span></span>
                   <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
-                  <span className='forecast-weather-item-temp'>22°/34°</span>
+                  <span className='forecast-weather-item-temp'>22° ••• 34°</span>
                   <div className="forecast-weather-item-feels-like">
                     <span className='forecast-weather-item-title'>FEELS LIKE</span>
                     <span className='forecast-weather-item-value'>23°</span>
@@ -227,9 +227,9 @@ function App() {
                   </div>
                 </div>
                 <div className='forecast-weather-item'>
-                  <span className='forecast-weather-item-day'>VEN.</span>
+                  <span className='forecast-weather-item-day'>DIM. <span className='forecast-weather-rest-day'>11 OCT.</span></span>
                   <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
-                  <span className='forecast-weather-item-temp'>22°/34°</span>
+                  <span className='forecast-weather-item-temp'>22° ••• 34°</span>
                   <div className="forecast-weather-item-feels-like">
                     <span className='forecast-weather-item-title'>FEELS LIKE</span>
                     <span className='forecast-weather-item-value'>23°</span>
