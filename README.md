@@ -53,7 +53,7 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](./src/assets/images/weathy-screen.png)
+[![Product Name Screen Shot][product-screenshot]](https://github.com/phelied/weathy/blob/main/src/assets/images/weathy-screen.png)
 
 In this project I created a React weather app, which uses an API from openweathermap to get weather information all over the world and an other API to propose a list of cities in the search bar.
 
@@ -61,7 +61,6 @@ In this project I created a React weather app, which uses an API from openweathe
 
 You can use locate button to get weather data at your location. You can also use search to find the current weather at a city, for example London or New York. The app displays local temperature, gives you a brief description and also shows an 3D Design based on the weather and the local hour.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
@@ -122,7 +121,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Responsive
 - [x] Add Spline Design
 - [x] Implement API
-- [ ] Implement Design by Hour
+- [ ] Implement 3DDesign which depends on local hour
 - [ ] Add Search Design
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -135,9 +134,9 @@ If you have a suggestion that would make this better, please fork the repo and c
 Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+2. Create your Feature Branch (`git checkout -b AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+4. Push to the Branch (`git push origin AmazingFeature`)
 5. Open a Pull Request
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -146,15 +145,13 @@ Don't forget to give the project a star! Thanks again!
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Contact
 
-Ophelie Diomar - [LinkedIn](https://www.linkedin.com/in/ophelie-diomar-680162209/) - opheliediomar@outlook.fr
+Ophelie Diomar - [LinkedIn][linkedin-url] - opheliediomar@outlook.fr
 
 Project Link: [https://github.com/phelied/weathy](https://github.com/phelied/weathy)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Acknowledgments
 
@@ -169,6 +166,7 @@ Here is a list resources I find helpful and would like to give credit to.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
+[product-screenshot]: ./src/assets/images/weathy-screen.png
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
 [license-url]: https://github.com/phelied/weathy/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
