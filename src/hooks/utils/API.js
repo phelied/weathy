@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default {
+const API =  {
     ApiCities: async (city) => {
         const options = {
             method: "GET",
@@ -31,3 +31,5 @@ export default {
         }
     }
 }
+
+export default API;
