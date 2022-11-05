@@ -1,17 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import './App.css';
-// import Search from './components/Search/search.jsx';
-// import logo from './assets/images/weathy-logo.png';
 import BunnyGif from './assets/images/bunny-copy.gif';
-// import SplineHook from './hooks/3D/spline';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faXmark, faLocationDot, faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faSquareGithub } from '@fortawesome/free-brands-svg-icons';
 import API from "./hooks/utils/API";
-
-// const SplineHook = React.lazy(() => import('./hooks/3D/spline'));
 
 function App() {
   const [isActive, setActive] = useState(false);
@@ -39,7 +33,12 @@ function App() {
 
   function getLocalisationUser() {
     navigator.geolocation.getCurrentPosition(function (position) {
-      API.ApiWeather(position.coords.latitude, position.coords.longitude).then((data) => { setWeatherData(data) });
+      API.ApiGetCityFromLocation(position.coords.latitude, position.coords.longitude).then((cityName) => {
+        setCity(cityName)
+      });
+      API.ApiWeather(position.coords.latitude, position.coords.longitude).then((data) => {
+        setWeatherData(data)
+      });
     });
   };
 
@@ -72,7 +71,7 @@ function App() {
   useEffect(() => {
     if (wordEntered !== "") {
       const timer = setTimeout(() => {
-        API.ApiCities(wordEntered).then((data) => setSearchedData(data));
+        API.ApiListCities(wordEntered).then((data) => setSearchedData(data));
       }, 500);
 
       return () => clearTimeout(timer);
@@ -129,45 +128,29 @@ function App() {
         </div>
         <div className='main-weather-current'>
           <span className='main-weather-current--city'>{city ? city : "LONDON"}</span>
-          <span className='main-weather-current--temp'>19°</span>
-          <span className='main-weather-current--phrase'>Cloudy</span>
-          <div className='main-weather-current--temp-range'>
-            <div className='main-weather-current--temp-min'>
-              <FontAwesomeIcon icon={faArrowDown} />
-              <span>12°</span>
+          <span className='main-weather-current--temp'>{weatherData.current ? `${Math.round(weatherData.current.temp)}°` : "--"}</span>
+          <span className='main-weather-current--phrase'>{weatherData.daily ? weatherData.daily[0].weather[0].description : ""} </span>
+          {weatherData && weatherData.length !== 0 &&
+            <div className='main-weather-current--temp-range'>
+              <div className='main-weather-current--temp-min'>
+                <FontAwesomeIcon icon={faArrowDown} />
+                <span>{Math.round(weatherData.daily[0].temp.min)}°</span>
+              </div>
+              <div className='main-weather-current--temp-max'>
+                <FontAwesomeIcon icon={faArrowUp} />
+                <span>{Math.round(weatherData.daily[0].temp.max)}°</span>
+              </div>
             </div>
-            <div className='main-weather-current--temp-max'>
-              <FontAwesomeIcon icon={faArrowUp} />
-              <span>29°</span>
-            </div>
-          </div>
+          }
         </div>
       </header>
       <main>
-        {/* {weatherData && weatherData.length !== 0
-          && ( */}
-        {/* <div className='main-weather-current'>
-          <span className='main-weather-current--city'>{city ? city : "LONDON"}</span>
-          <span className='main-weather-current--temp'>{Math.round(weatherData.current.temp)}°</span>
-          <span className='main-weather-current--phrase'>{weatherData.daily[0].weather[0].description}</span>
-          <div className='main-weather-current--temp-range'>
-            <div className='main-weather-current--temp-min'>
-              <FontAwesomeIcon icon={faArrowDown} />
-              <span> Min. {Math.round(weatherData.daily[0].temp.min)}°</span>
-            </div>
-            <div className='main-weather-current--temp-max'>
-              <FontAwesomeIcon icon={faArrowUp} />
-              <span>Max. {Math.round(weatherData.daily[0].temp.max)}°</span>
-            </div>
-          </div>
-        </div> */}
-        {/* )} */}
         <div className='spline'>
           <img className="spline-img" src={BunnyGif} alt="bunny gif" />
         </div>
         <div className='forecast-weather'>
           {weatherData && weatherData.length !== 0 ? (
-            weatherData.daily.slice(1, 5).map((day, index) => (
+            weatherData.daily.slice(1, 6).map((day, index) => (
               <div className='forecast-weather-item' key={index}>
                 <span className='forecast-weather-item-day'>{new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(new Date(day.dt * 1000)).substring(0, 4)}.</span>
                 <img className='forecast-weather-item-icon' alt='weather-icon' src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`} />
@@ -175,23 +158,40 @@ function App() {
               </div>
             ))) :
             (
-              <><div className='forecast-weather-item'>
-                <span className='forecast-weather-item-day'>JEU. <span className='forecast-weather-rest-day'>11 OCT.</span></span>
-                <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
-                <span className='forecast-weather-item-temp'>22° ••• 34°</span>
-                <div className="forecast-weather-item-feels-like">
-                  <span className='forecast-weather-item-title'>FEELS LIKE</span>
-                  <span className='forecast-weather-item-value'>23°</span>
+              <>
+                <div className='forecast-weather-item'>
+                  <span className='forecast-weather-item-day'>JEU. <span className='forecast-weather-rest-day'>11 OCT.</span></span>
+                  <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
+                  <span className='forecast-weather-item-temp'>22° ••• 34°</span>
+                  <div className="forecast-weather-item-feels-like">
+                    <span className='forecast-weather-item-title'>FEELS LIKE</span>
+                    <span className='forecast-weather-item-value'>23°</span>
+                  </div>
+                  <div className='forecast-weather-item-wind'>
+                    <span className='forecast-weather-item-title'>WIND</span>
+                    <span className='forecast-weather-item-value'>8KM/H</span>
+                  </div>
+                  <div className="forecast-weather-item-humidity">
+                    <span className='forecast-weather-item-title'>HUMIDITY</span>
+                    <span className='forecast-weather-item-value'>23%</span>
+                  </div>
+                </div><div className='forecast-weather-item'>
+                  <span className='forecast-weather-item-day'>JEU. <span className='forecast-weather-rest-day'>11 OCT.</span></span>
+                  <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />
+                  <span className='forecast-weather-item-temp'>22° ••• 34°</span>
+                  <div className="forecast-weather-item-feels-like">
+                    <span className='forecast-weather-item-title'>FEELS LIKE</span>
+                    <span className='forecast-weather-item-value'>23°</span>
+                  </div>
+                  <div className='forecast-weather-item-wind'>
+                    <span className='forecast-weather-item-title'>WIND</span>
+                    <span className='forecast-weather-item-value'>8KM/H</span>
+                  </div>
+                  <div className="forecast-weather-item-humidity">
+                    <span className='forecast-weather-item-title'>HUMIDITY</span>
+                    <span className='forecast-weather-item-value'>23%</span>
+                  </div>
                 </div>
-                <div className='forecast-weather-item-wind'>
-                  <span className='forecast-weather-item-title'>WIND</span>
-                  <span className='forecast-weather-item-value'>8KM/H</span>
-                </div>
-                <div className="forecast-weather-item-humidity">
-                  <span className='forecast-weather-item-title'>HUMIDITY</span>
-                  <span className='forecast-weather-item-value'>23%</span>
-                </div>
-              </div>
                 <div className='forecast-weather-item'>
                   <span className='forecast-weather-item-day'>VEN. <span className='forecast-weather-rest-day'>11 OCT.</span></span>
                   <img src={require("./assets/images/icons/cloud-computing.png")} alt='' />

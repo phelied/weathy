@@ -24,7 +24,7 @@ const Search = () => {
   useEffect(() => {
     if (wordEntered !== "") {
       const timer = setTimeout(() => {
-        API.ApiCities(wordEntered).then((data) => setSearchedData(data));
+        API.ApiListCities(wordEntered).then((data) => setSearchedData(data));
       }, 500);
 
       return () => clearTimeout(timer);

@@ -17,6 +17,11 @@
   src: url("./assets/fonts/Inter-Bold.ttf");
 }
 
+@font-face {
+  font-family: "Inter Semi Bold";
+  src: url("./assets/fonts/Inter-SemiBold.ttf");
+}
+
 .app {
   background-repeat: no-repeat;
   background-position: center;
@@ -261,7 +266,6 @@ iframe {
   flex-direction: column;
   margin: auto;
   padding: 1vh 0vh;
-  backdrop-filter: saturate(0.5);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
   background: linear-gradient(
@@ -282,8 +286,12 @@ iframe {
 
 .forecast-weather-item > span:first-child {
   width: 16vw;
-  font-family: Inter Bold;
-  font-size: 5vw;
+  font-family: Inter Semi Bold;
+  font-size: 4vw;
+}
+
+.forecast-weather-item-temp {
+  font-size: 4.25vw;
 }
 
 .more-current-weather {
@@ -306,6 +314,10 @@ iframe {
     rgba(189, 208, 223, 0.687694) 156.39%
   );
   box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
+}
+
+.forecast-weather div:last-child {
+  display: none;
 }
 
 .more-current-weather-item-title {
@@ -344,7 +356,39 @@ footer > .nav-footer__link svg {
   margin: 0px 20px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (min-width: 768px) {
+  .forecast-weather div:last-child {
+    display: flex;
+  }
+
   .app {
     padding-top: 30px;
   }
@@ -402,7 +446,7 @@ footer > .nav-footer__link svg {
     width: 100%;
     height: 85%;
     display: grid;
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
     color: white;
   }
 
@@ -508,6 +552,36 @@ footer > .nav-footer__link svg {
     width: 50px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (min-width: 992px) {
   .forecast-weather-item img {

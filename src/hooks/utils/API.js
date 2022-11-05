@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API =  {
-    ApiCities: async (city) => {
+const API = {
+    ApiListCities: async (city) => {
         const options = {
             method: "GET",
             url: "https://wft-geo-db.p.rapidapi.com/v1/geo/cities",
@@ -29,6 +29,23 @@ const API =  {
         } catch (error) {
             console.error(error);
         }
+    },
+    ApiGetCityFromLocation: async (latitude, longitude) => {
+        const opencage = require('opencage-api-client');
+        let cityName = opencage
+            .geocode({ q: [latitude, longitude], key: process.env.REACT_APP_OPENCAGE_API_KEY })
+            .then((data) => {
+                console.log(data.results[0].components);
+                if (data.results[0].components.hasOwnProperty('city')) {
+                    return data.results[0].components.city;
+                } else {
+                    return data.results[0].components.county;
+                }
+            })
+            .catch((error) => {
+                console.log('error', error.message);
+            });
+        return cityName;
     }
 }
 
