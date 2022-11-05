@@ -49,20 +49,25 @@ function App() {
   // get the localisation of the user
   const askLocalisationUser = () => {
     if (navigator.geolocation) {
-      navigator.permissions
-        .query({ name: "geolocation" })
-        .then(function (result) {
-          if (result.state === "granted") {
-            navigator.geolocation.getCurrentPosition(getLocalisationUser);
-          } else if (result.state === "prompt") {
-            navigator.geolocation.getCurrentPosition(getLocalisationUser, errorsLocalisationUser);
-          } else if (result.state === "denied") {
-            //If denied then you have to show instructions to enable location
-          }
-          result.onchange = function () {
-            console.log(result.state);
-          };
-        });
+      if (navigator.permissions && navigator.permissions.query) {
+        navigator.permissions
+          .query({ name: "geolocation" })
+          .then(function (result) {
+            if (result.state === "granted") {
+              navigator.geolocation.getCurrentPosition(getLocalisationUser);
+            } else if (result.state === "prompt") {
+              navigator.geolocation.getCurrentPosition(getLocalisationUser, errorsLocalisationUser);
+            } else if (result.state === "denied") {
+              //If denied then you have to show instructions to enable location
+            }
+            result.onchange = function () {
+              console.log(result.state);
+            };
+          });
+      } else {
+        // safari doesn't support permissions.query
+        navigator.geolocation.getCurrentPosition(getLocalisationUser)
+      }
     } else {
       alert("Sorry Not available!");
     }
