@@ -16,11 +16,6 @@ const Search = () => {
     console.log(weatherData);
   };
 
-  const clearInput = () => {
-    setSearchedData([]);
-    setWordEntered("");
-  };
-
   useEffect(() => {
     if (wordEntered !== "") {
       const timer = setTimeout(() => {
@@ -28,8 +23,6 @@ const Search = () => {
       }, 500);
 
       return () => clearTimeout(timer);
-    } else {
-      // clearInput();
     }
   }, [wordEntered]);
 

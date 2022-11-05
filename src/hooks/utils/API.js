@@ -32,15 +32,15 @@ const API = {
     },
     ApiGetCityFromLocation: async (latitude, longitude) => {
         const opencage = require('opencage-api-client');
-        let cityName = opencage
+        let cityName = await opencage
             .geocode({ q: [latitude, longitude], key: process.env.REACT_APP_OPENCAGE_API_KEY })
             .then((data) => {
                 console.log(data.results[0].components);
-                if (data.results[0].components.hasOwnProperty('city')) {
+                if (Object.prototype.hasOwnProperty.call(data.results[0].components, "city")) {
                     return data.results[0].components.city;
-                } else {
-                    return data.results[0].components.county;
                 }
+                return data.results[0].components.county;
+
             })
             .catch((error) => {
                 console.log('error', error.message);

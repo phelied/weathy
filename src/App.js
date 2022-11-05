@@ -18,17 +18,17 @@ function App() {
     return name.charAt(0).toUpperCase() + name.slice(1);
   };
 
-  const handleClick = (city, latitude, longitude) => {
-    API.ApiWeather(latitude, longitude).then((data) => {
-      setWeatherData(data);
-      setCity(city)
-      clearInput();
-    });
-  };
-
   const clearInput = () => {
     setSearchedData([]);
     setWordEntered("");
+  };
+
+  const handleClick = (cityName, latitude, longitude) => {
+    API.ApiWeather(latitude, longitude).then((data) => {
+      setWeatherData(data);
+      setCity(cityName)
+      clearInput();
+    });
   };
 
   function getLocalisationUser() {
