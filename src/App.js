@@ -1,136 +1,32 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import BunnyGif from './assets/images/bunny-copy.gif';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass, faXmark, faLocationDot, faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faSquareGithub } from '@fortawesome/free-brands-svg-icons';
-import API from "./hooks/utils/API";
+import Search from './components/search';
 
 function App() {
-  const [isActive, setActive] = useState(false);
-  const [searchedData, setSearchedData] = useState([]);
   const [weatherData, setWeatherData] = useState([]);
-  const [wordEntered, setWordEntered] = useState("");
   const [city, setCity] = useState("");
+  const [error, setError] = useState("");
 
-  const capitalizeFirstLetter = (name) => {
-    return name.charAt(0).toUpperCase() + name.slice(1);
-  };
-
-  const clearInput = () => {
-    setSearchedData([]);
-    setWordEntered("");
-  };
-
-  const handleClick = (cityName, latitude, longitude) => {
-    API.ApiWeather(latitude, longitude).then((data) => {
-      setWeatherData(data);
-      setCity(cityName)
-      clearInput();
-    });
-  };
-
-  function getLocalisationUser() {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      API.ApiGetCityFromLocation(position.coords.latitude, position.coords.longitude).then((cityName) => {
-        setCity(cityName)
-      });
-      API.ApiWeather(position.coords.latitude, position.coords.longitude).then((data) => {
-        setWeatherData(data)
-      });
-    });
-  };
-
-  function errorsLocalisationUser(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-  }
-
-  // get the localisation of the user
-  const askLocalisationUser = () => {
-    if (navigator.geolocation) {
-      if (navigator.permissions && navigator.permissions.query) {
-        navigator.permissions
-          .query({ name: "geolocation" })
-          .then(function (result) {
-            if (result.state === "granted") {
-              navigator.geolocation.getCurrentPosition(getLocalisationUser);
-            } else if (result.state === "prompt") {
-              navigator.geolocation.getCurrentPosition(getLocalisationUser, errorsLocalisationUser);
-            } else if (result.state === "denied") {
-              //If denied then you have to show instructions to enable location
-            }
-            result.onchange = function () {
-              console.log(result.state);
-            };
-          });
-      } else {
-        // safari doesn't support permissions.query
-        navigator.geolocation.getCurrentPosition(getLocalisationUser)
-      }
-    } else {
-      alert("Sorry Not available!");
-    }
-  };
-
-  useEffect(() => {
-    if (wordEntered !== "") {
-      const timer = setTimeout(() => {
-        API.ApiListCities(wordEntered).then((data) => setSearchedData(data));
-      }, 500);
-
-      return () => clearTimeout(timer);
-    }
-  }, [wordEntered]);
-
-  const handleToggle = () => {
-    setActive(!isActive);
+  const getWeatherData = (data, cityName) => {
+    setWeatherData(data);
+    setCity(cityName);
   };
 
   return (
     <div className="app">
       <header>
-        <div className='container-search'>
-          <nav className='navbar'>
-            <div className="search-box">
-              {isActive ? (
-                <><button className='btn-search-open btn-search' onClick={handleToggle}>
-                  <FontAwesomeIcon icon={faXmark} />
-                </button>
-
-                  <input type="text" className='input-search-open input-search search__block-input'
-                    value={wordEntered} placeholder="Search for a city"
-                    onChange={(e) => setWordEntered(e.target.value.trim())} /> </>)
-                :
-                (<>
-                  <button onClick={askLocalisationUser} className='btn-search btn-localisation'>
-                    <FontAwesomeIcon icon={faLocationDot} />
-                  </button><button onClick={handleToggle} className='btn-search'>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                  </button>
-
-                  <input type="text" className='input-search' value={wordEntered}
-                    onChange={(e) => setWordEntered(e.target.value.trim())} /></>)}
-            </div>
-          </nav>
-
-          <div className="search__select-data">
-            {searchedData && searchedData.length !== 0 && (
-              <>
-                {searchedData.map((data, index) => (
-                  <div
-                    key={data.city + index}
-                    className="search__select-data-item"
-                    onClick={() => handleClick(data.city, data.latitude, data.longitude)}
-                  >
-                    {capitalizeFirstLetter(data.city)},{" "}
-                    <span>{data.country}</span>
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
-        </div>
+        {error !== '' ? <div className="error-message">
+          <span> &#9432; {error}</span>
+        </div> :
+          null}
+          <Search getWeatherData={getWeatherData}/>
+      </header>
+      <main>
         <div className='main-weather-current'>
           <span className='main-weather-current--city'>{city ? city : "LONDON"}</span>
           <span className='main-weather-current--temp'>{weatherData.current ? `${Math.round(weatherData.current.temp)}°` : "--"}</span>
@@ -148,15 +44,13 @@ function App() {
             </div>
           }
         </div>
-      </header>
-      <main>
         <div className='spline'>
           <img className="spline-img" src={BunnyGif} alt="bunny gif" />
         </div>
         <div className='forecast-weather'>
           {weatherData && weatherData.length !== 0 ? (
-            weatherData.daily.slice(1, 6).map((day, index) => (
-              <div className='forecast-weather-item' key={index}>
+            weatherData.daily.slice(1, 6).map((day) => (
+              <div className='forecast-weather-item' key={new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(new Date(day.dt * 1000))}>
                 <span className='forecast-weather-item-day'>{new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(new Date(day.dt * 1000)).substring(0, 4)}.</span>
                 <img className='forecast-weather-item-icon' alt='weather-icon' src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`} />
                 <span className='forecast-weather-item-temp'>{Math.round(day.temp.min)}°• {Math.round(day.temp.max)}°</span>
