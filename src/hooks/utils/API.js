@@ -1,4 +1,5 @@
 import axios from "axios";
+import { defaultCity } from "./const";
 
 const API = {
     ApiListCities: async (city) => {
@@ -35,7 +36,6 @@ const API = {
         let cityName = await opencage
             .geocode({ q: [latitude, longitude], key: process.env.REACT_APP_OPENCAGE_API_KEY })
             .then((data) => {
-                console.log(data.results[0].components);
                 if (Object.prototype.hasOwnProperty.call(data.results[0].components, "city")) {
                     return data.results[0].components.city;
                 }
