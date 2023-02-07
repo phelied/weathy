@@ -22,10 +22,13 @@ const API = {
             console.error(error);
         }
     },
-    ApiWeather: async (latitude, longitude) => {
+    ApiWeather: async (lat, lon) => {
         try {
             const response = await axios
-                .request(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`);
+                .get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`);
+                const airPollution = await axios
+                .get(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}`);
+                response['data']['air'] = airPollution.data.list[0]
             return (response.data);
         } catch (error) {
             console.error(error);
