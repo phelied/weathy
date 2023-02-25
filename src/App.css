@@ -21,6 +21,12 @@
   font-family: "Jost";
   src: url("./assets/fonts/Jost/static/Jost-Regular.ttf");
 }
+.back {
+  background-image: url("../public/clouds.png");
+  background-position: -187% 100%;
+  background-size: 174% 85%;
+  background-repeat: repeat-x;
+}
 
 .app {
   /* background-repeat: no-repeat;

@@ -3,13 +3,11 @@ import "../assets/styles/search.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
-  faXmark,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import API from "../hooks/utils/API";
 
 const Search = ({ getWeatherData }) => {
-  const [isActive, setActive] = useState(false);
   const [searchedData, setSearchedData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
   const [city, setCity] = useState("");
@@ -69,10 +67,6 @@ const Search = ({ getWeatherData }) => {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
-  const handleToggle = () => {
-    setActive(!isActive);
-  };
-
   const handleClick = (cityName, latitude, longitude) => {
     API.ApiWeather(latitude, longitude).then((data) => {
       getWeatherData(data, cityName);
@@ -88,48 +82,27 @@ const Search = ({ getWeatherData }) => {
 
       return () => clearTimeout(timer);
     }
+    clearInput();
   }, [wordEntered]);
 
   return (
-    <div className="container-search">
-      <nav className="navbar">
-        <div className="search-box">
-          {isActive ? (
-            <>
-              <button
-                className="btn-search-open btn-search"
-                onClick={handleToggle}
-              >
-                <FontAwesomeIcon icon={faXmark} />
-              </button>
-              <input
-                type="text"
-                className="input-search-open input-search search__block-input"
-                value={wordEntered}
-                placeholder="Search for a city"
-                onChange={(e) => setWordEntered(e.target.value.trim())}
-              />{" "}
-            </>
-          ) : (
-            <>
-              <button
-                onClick={askLocalisationUser}
-                className="btn-search btn-localisation"
-              >
-                <FontAwesomeIcon icon={faLocationDot} />
-              </button>
-              <button onClick={handleToggle} className="btn-search">
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-              </button>
-
-              <input
-                type="text"
-                className="input-search"
-                value={wordEntered}
-                onChange={(e) => setWordEntered(e.target.value.trim())}
-              />
-            </>
-          )}
+    <div className="w-full">
+      <nav className="flex">
+        <input
+          type="text"
+          className=" h-10 w-full p-1.5 rounded bg-[#F5F5F5] text-[#1A2840] placeholder-[#1A2840]"
+          placeholder="Search city ... "
+          value={wordEntered}
+          onChange={(e) => setWordEntered(e.target.value.trim())}
+        />
+        <div className="absolute left-[76%] text-xl mt-1">
+          <button onClick={askLocalisationUser} className="">
+            <FontAwesomeIcon className="mr-2.5" icon={faLocationDot} />
+          </button>
+          <FontAwesomeIcon
+            className="text-[#FDAA67]"
+            icon={faMagnifyingGlass}
+          />
         </div>
       </nav>
       {searchedData && searchedData.length !== 0 && (
