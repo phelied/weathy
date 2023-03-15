@@ -23,12 +23,22 @@ const API = {
         }
     },
     ApiWeather: async (lat, lon) => {
+        // let urls = [
+        //     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`,
+        //     `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}`,
+        //     `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`,
+        // ];
         try {
+
+            // const requests = urls.map((url) => axios.get(url));
             const response = await axios
                 .get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`);
-                const airPollution = await axios
+            const airPollution = await axios
                 .get(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}`);
-                response['data']['air'] = airPollution.data.list[0]
+            const forecastData = await axios
+                .get(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`);
+            response['data']['forecast'] = forecastData.data.list[16]
+            response['data']['air'] = airPollution.data.list[0]
             return (response.data);
         } catch (error) {
             console.error(error);

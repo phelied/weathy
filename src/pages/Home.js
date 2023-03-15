@@ -3,20 +3,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudSun, faWind } from '@fortawesome/free-solid-svg-icons';
 import { faSquareGithub } from '@fortawesome/free-brands-svg-icons';
 import Search from '../components/search';
-import Forecast from '../components/forecast';
 import "../assets/styles/home.css";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import clouds from "../assets/images/clouds.png";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import API from "../hooks/utils/API";
+import API from "../utils/API";
 
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const Home = () => {
+    const defaultCity = { 'lon': 2.3486, 'lat': 48.853401 };
+    const [weatherData, setWeatherData] = useState([]);
+    const [error, setError] = useState("");
+
     const getWeatherData = (data, cityName) => {
         data['name'] = cityName;
         setWeatherData(data);
@@ -34,10 +37,7 @@ const Home = () => {
     };
 
 
-    const defaultCity = { 'lon': 2.3486, 'lat': 48.853401 };
-    const [weatherData, setWeatherData] = useState([]);
-    const [city, setCity] = useState("");
-    const [error, setError] = useState("");
+
 
     useEffect(() => {
         API.ApiWeather(defaultCity.lat, defaultCity.lon).then((data) => {
@@ -73,13 +73,13 @@ const Home = () => {
     }
 
 
-    return (<div className="app">
-        <header className="flex justify-between px-4 py-6 bg-white items-center">
+    return (<div className="app px-4">
+        <header className="flex justify-between py-6 bg-white items-center">
             <Search getWeatherData={getWeatherData} />
         </header>
         {error && <div className="alert alert-danger">{error}</div>}
         {weatherData && weatherData.length !== 0 &&
-            <main className='bg-white px-4 text-[#1A2840]'>
+            <main className='bg-white text-[#1A2840]'>
                 <div className='font-["Jost"] flex h-max flex-col bg-[#BEE6E6] rounded-xl back'>
                     <div className='flex pl-2 pt-4 items-center '>
                         <FontAwesomeIcon className='h-4 bg-white py-2 px-1 rounded-full text-[#FDAA67]' icon={faCloudSun} />
@@ -95,7 +95,6 @@ const Home = () => {
                         </div>
                         <span className='h-5 pl-2 text-black text-sm'>{weatherData.weather[0].description}</span>
                     </div>
-                    {console.log(weatherData)}
                     <div className='grid grid-cols-3 gap-x-2 mx-3 my-6 justify-around'>
                         <div className='flex flex-col items-center py-2 justify-center bg-[#1A2840] text-white rounded-xl'>
                             <span className='text-sm font-medium'>Pressure</span>
@@ -134,11 +133,11 @@ const Home = () => {
                         <ProgressBar className='mt-2 h-2 text-black' variant="warning" animated now={weatherData.air.main.aqi * 20} />
                     </div>
                 </div>
-                <div className='text-[#1A2840] font-bold text-3xl mt-8'>
+                {/* <div className='text-[#1A2840] font-bold text-3xl mt-8'>
                     <span>How's the</span><br />
                     <span>temperature today ? </span>
-                </div>
-                <div className='w-full mt-12'>
+                </div> */}
+                {/* <div className='w-full mt-12'>
                     <div className='grid grid-cols-4 w-full mt-4 text-black absolute justify-center'>
                         <img src={clouds} style={{ bottom: "2em" }} className='h-12 p-2 border-[#F4F5F7] border rounded-full relative' alt="Rectangle-1" border="0" />
                         <img src={clouds} style={{ bottom: "4em" }} className='h-12 p-2 border rounded-full relative' alt="Rectangle-1" border="0" />
@@ -207,26 +206,27 @@ const Home = () => {
                         </div>
 
                     </div>
-                </div>
+                </div> */}
                 <div className='font-["Jost"] grid h-[18rem] grid-cols-1 bg-[#CBE175] mt-6 rounded-xl text-black content-between'>
                     <div className='flex pl-6 pt-4 flex-col'>
                         <span className='text-2xl font-semibold'>Tomorrow</span>
-                        <span className='text-lg'>Paris</span>
+                        <span className='text-lg'>{weatherData.name}</span>
                     </div>
+                    {console.log(weatherData)}
                     <div className='flex flex-col pl-6 pt-4 mt-2 mb-10'>
-                        <span className='text-5xl font-semibold'>22°C</span>
-                        <span className='h-5 mt-2 text-black text-base'>Partly Cloudy</span>
+                        <span className='text-5xl font-semibold'>{Math.floor(weatherData.forecast.main.temp)}°C</span>
+                        <span className='h-5 mt-2 text-black text-base'>{weatherData.forecast.weather[0].description}</span>
                     </div>
                 </div>
             </main>
         }
-        {/* <footer>
-            <nav className='nav-footer__link'>
+        <footer>
+            <nav className='nav-footer__link mt-2 flex justify-end'>
                 <a href="https://github.com/phelied/weathy" target="_blank" rel="noreferrer">
                     <FontAwesomeIcon icon={faSquareGithub} />
                 </a>
             </nav>
-        </footer> */}
+        </footer>
     </div>);
 };
 

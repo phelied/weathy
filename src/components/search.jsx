@@ -5,7 +5,7 @@ import {
   faMagnifyingGlass,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import API from "../hooks/utils/API";
+import API from "../utils/API";
 
 const Search = ({ getWeatherData }) => {
   const [searchedData, setSearchedData] = useState([]);
@@ -96,9 +96,9 @@ const Search = ({ getWeatherData }) => {
           onChange={(e) => setWordEntered(e.target.value.trim())}
         />
         <div className="absolute left-[76%] text-xl mt-1">
-          <button onClick={askLocalisationUser} className="">
+          {/* <button onClick={askLocalisationUser} className="">
             <FontAwesomeIcon className="mr-2.5" icon={faLocationDot} />
-          </button>
+          </button> */}
           <FontAwesomeIcon
             className="text-[#FDAA67]"
             icon={faMagnifyingGlass}
