@@ -45,7 +45,7 @@ const API = {
     },
     ApiGetCityFromLocation: async (latitude, longitude) => {
         const opencage = require('opencage-api-client');
-        let cityName = await opencage
+        const cityName = await opencage
             .geocode({ q: [latitude, longitude], key: process.env.REACT_APP_OPENCAGE_API_KEY })
             .then((data) => {
                 if (Object.prototype.hasOwnProperty.call(data.results[0].components, "city")) {

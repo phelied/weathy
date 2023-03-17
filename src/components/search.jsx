@@ -21,6 +21,26 @@ const Search = ({ getWeatherData }) => {
     return name.charAt(0).toUpperCase() + name.slice(1);
   };
 
+  function getLocalisationUser() {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      API.ApiGetCityFromLocation(
+        position.coords.latitude,
+        position.coords.longitude
+      ).then((cityName) => {
+        setCity(cityName);
+      });
+      API.ApiWeather(position.coords.latitude, position.coords.longitude).then(
+        (data) => {
+          getWeatherData(data, city);
+        }
+      );
+    });
+  }
+
+  function errorsLocalisationUser(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
   const askLocalisationUser = () => {
     if (navigator.geolocation) {
       if (navigator.permissions && navigator.permissions.query) {
@@ -46,26 +66,6 @@ const Search = ({ getWeatherData }) => {
       alert("Sorry Not available!");
     }
   };
-
-  function getLocalisationUser() {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      API.ApiGetCityFromLocation(
-        position.coords.latitude,
-        position.coords.longitude
-      ).then((cityName) => {
-        setCity(cityName);
-      });
-      API.ApiWeather(position.coords.latitude, position.coords.longitude).then(
-        (data) => {
-          getWeatherData(data, city);
-        }
-      );
-    });
-  }
-
-  function errorsLocalisationUser(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-  }
 
   const handleClick = (cityName, latitude, longitude) => {
     API.ApiWeather(latitude, longitude).then((data) => {

@@ -30,8 +30,12 @@ const Home = () => {
         });
     }, []);
 
+    function interpolate(value, min1, max1, min2, max2) {
+        return Math.round(((value - min1) * (max2 - min2)) / (max1 - min1) + min2);
+    }
+
     function calculateAqi(pm25) {
-        let aqi;
+        let aqi = 0;
         if (pm25 >= 0 && pm25 <= 12.0) {
             aqi = interpolate(pm25, 0, 12.0, 0, 50);
         } else if (pm25 > 12.0 && pm25 <= 35.4) {
@@ -51,11 +55,6 @@ const Home = () => {
         }
         return aqi;
     }
-
-    function interpolate(value, min1, max1, min2, max2) {
-        return Math.round(((value - min1) * (max2 - min2)) / (max1 - min1) + min2);
-    }
-
 
     return (<AppContainer>
         <Header>
