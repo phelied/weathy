@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudSun, faWind } from '@fortawesome/free-solid-svg-icons';
 import Search from '../components/search';
-import Footer from '../components/footer';
 import "../assets/styles/home.css";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
@@ -131,15 +130,16 @@ const Home = () => {
 };
 
 const AppContainer = styled.div`
-  padding: 0 1rem;
+  margin: 0 1rem;
 `;
 
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
+  padding-top: 1rem ;
   background-color: white;
+  box-sizing: border-box;
 `;
 
 const AlertDanger = styled.div`

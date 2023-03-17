@@ -5,6 +5,7 @@ import {
   faMagnifyingGlass,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
 import API from "../utils/API";
 
 const Search = ({ getWeatherData }) => {
@@ -86,27 +87,27 @@ const Search = ({ getWeatherData }) => {
   }, [wordEntered]);
 
   return (
-    <div className="w-full">
-      <nav className="flex">
-        <input
-          type="text"
-          className=" h-10 w-full p-1.5 rounded bg-[#F5F5F5] text-[#1A2840] placeholder-[#1A2840]"
-          placeholder="Search city ... "
-          value={wordEntered}
-          onChange={(e) => setWordEntered(e.target.value.trim())}
-        />
-        <div className="absolute left-[76%] text-xl mt-1">
-          {/* <button onClick={askLocalisationUser} className="">
+    <SearchContainer>
+      <input
+        type="text"
+        className=" h-10 w-full p-1.5 rounded bg-[#F5F5F5] text-[#1A2840] placeholder-[#1A2840]"
+        placeholder="Search city ... "
+        value={wordEntered}
+        onChange={(e) => setWordEntered(e.target.value.trim())}
+      />
+      <IconContainer>
+        <div>
+          <button onClick={askLocalisationUser} className="">
             <FontAwesomeIcon className="mr-2.5" icon={faLocationDot} />
-          </button> */}
+          </button>
           <FontAwesomeIcon
             className="text-[#FDAA67]"
             icon={faMagnifyingGlass}
           />
         </div>
-      </nav>
-      {searchedData && searchedData.length !== 0 && (
-        <div className="search__select-data">
+      </IconContainer>
+      {searchedData && (
+        <SelectData searchedData={searchedData}>
           {searchedData.map((data) => (
             <div
               key={data.city}
@@ -116,13 +117,56 @@ const Search = ({ getWeatherData }) => {
               }
               role="button"
             >
-              {capitalizeFirstLetter(data.city)}, <span>{data.country}</span>
+              {capitalizeFirstLetter(data.city)}, {data.country}
             </div>
           ))}
-        </div>
+        </SelectData>
       )}
-    </div>
+    </SearchContainer>
   );
 };
+
+const SelectData = styled.div`
+  display: ${({ searchedData }) =>
+    searchedData && searchedData.length !== 0 ? "block" : "none"};
+  background-color: #fff;
+  border-radius: 0.375rem;
+  box-sizing: border-box;
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  margin-top: 0.25rem;
+  .search__select-data-item {
+    display: flex;
+    padding: 10px;
+    cursor: pointer;
+    &:hover {
+      background-color: #f2f2f2;
+    }
+    span {
+      margin-left: 5px;
+    }
+  }
+`;
+
+const SearchContainer = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+`;
+
+const IconContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  margin-top: 0.25rem;
+
+  & div {
+    position: absolute;
+    top: 15%;
+    right: 2.5%;
+  }
+`;
 
 export default Search;
