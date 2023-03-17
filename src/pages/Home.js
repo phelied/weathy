@@ -1,18 +1,15 @@
 
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudSun, faWind } from '@fortawesome/free-solid-svg-icons';
-import { faSquareGithub } from '@fortawesome/free-brands-svg-icons';
 import Search from '../components/search';
+import Footer from '../components/footer';
 import "../assets/styles/home.css";
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import { Line } from 'react-chartjs-2';
-import Chart from 'chart.js/auto';
-import clouds from "../assets/images/clouds.png";
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+
 import API from "../utils/API";
 import styled from 'styled-components';
-
-import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -24,17 +21,6 @@ const Home = () => {
     const getWeatherData = (data, cityName) => {
         data['name'] = cityName;
         setWeatherData(data);
-    };
-    const data = {
-        labels: [20, 34, 28, 22],
-        datasets: [
-            {
-                label: "My First dataset",
-                backgroundColor: "#EF9056",
-                borderColor: "#EF9056",
-                data: [20, 34, 28, 22],
-            },
-        ],
     };
 
     useEffect(() => {
@@ -117,119 +103,36 @@ const Home = () => {
                         </div>
                     </WeatherCardContent>
                     <WeatherTempContainer>
-                        <div className='flex pl-2 flex-row items-center'>
-                            <span className='text-3xl font-semibold'>{calculateAqi(weatherData.air.components["pm2_5"])}</span>
-                            <span className='text-sm bg-white ml-4 rounded-md font-semibold px-2 bg-[#CBE175] py-1 text-[#1A2840]'>AQI</span>
-                        </div>
-                        <span className='h-5 pl-2 text-white text-sm'>West Wind</span>
+                        <WeatherTemp>
+                            <h4>{calculateAqi(weatherData.air.components["pm2_5"])}</h4>
+                            <span>AQI</span>
+                        </WeatherTemp>
+                        <WeatherDescription className='text-white'>West Wind</WeatherDescription>
                     </WeatherTempContainer>
-                    <div className='mt-10 mx-2 rounded-xl bg-white text-[#1A2840] px-3 py-3 mb-3'>
-                        <div>
-                            <span className='text-sm font-semibold'>Good</span>
-                            <span className='text-sm font-semibold float-right'>Hazardous</span>
-                        </div>
+                    <ProgressBarContainer>
+                        <span>Good</span>
+                        <span>Hazardous</span>
                         <ProgressBar className='mt-2 h-2 text-black' variant="warning" animated now={weatherData.air.main.aqi * 20} />
-                    </div>
+                    </ProgressBarContainer>
                 </WeatherCard>
-                {/* <div className='text-[#1A2840] font-bold text-3xl mt-8'>
-                    <span>How's the</span><br />
-                    <span>temperature today ? </span>
-                </div> */}
-                {/* <div className='w-full mt-12'>
-                    <div className='grid grid-cols-4 w-full mt-4 text-black absolute justify-center'>
-                        <img src={clouds} style={{ bottom: "2em" }} className='h-12 p-2 border-[#F4F5F7] border rounded-full relative' alt="Rectangle-1" border="0" />
-                        <img src={clouds} style={{ bottom: "4em" }} className='h-12 p-2 border rounded-full relative' alt="Rectangle-1" border="0" />
-                        <img src={clouds} style={{ bottom: "2em" }} alt="Rectangle-1 " className='h-12 p-2 border relative rounded-full' border="0" />
-                        <img src={clouds} style={{ bottom: "2em" }} alt="Rectangle-1" border="0" className='h-12 p-2 border relative rounded-full' />
-                    </div>
-                    <div className='h-16'>
-                        <Line
-                            data={data}
-                            options={{
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                layout: {
-                                    padding: {
-                                        top: 30,
-
-                                    }
-                                },
-                                plugins: {
-                                    legend: {
-                                        display: false
-                                    }, tooltip: {
-                                        enabled: false
-                                    }
-                                }, elements: {
-                                    line: {
-                                        tension: 0.4
-                                    },
-                                    point: {
-                                        hoverRadius: 3,
-                                    }
-                                },
-                                scales: {
-                                    y: {
-                                        display: false,
-                                        grid: {
-                                            display: false
-                                        },
-                                    },
-                                    x: {
-                                        display: false,
-                                        grid: {
-                                            display: false
-                                        },
-                                    },
-                                }
-                            }}
-                        />
-                    </div>
-                    <div className='grid grid-cols-4 gap-5 mt-4 text-black'>
-                        <div className='flex flex-col justify-center items-center'>
-                            <span className='font-bold  text-lg'>20°</span>
-                            <span className='text-[#828282] font-semibold mt-0.5'>Morning</span>
-                        </div>
-                        <div className='flex flex-col justify-center items-center'>
-                            <span className='font-bold  text-lg' >34°</span>
-                            <span className='text-[#828282] font-semibold mt-0.5'>Afternoon</span>
-                        </div>
-                        <div className='flex flex-col justify-center items-center'>
-                            <span className='font-bold  text-lg' >28°</span>
-                            <span className='text-[#828282] font-semibold mt-0.5'>Evening</span>
-                        </div>
-                        <div className='flex flex-col justify-center items-center'>
-                            <span className='font-bold  text-lg' >22°</span>
-                            <span className='text-[#828282] font-semibold mt-0.5'>Night</span>
-                        </div>
-
-                    </div>
-                </div> */}
-                <div className='font-["Jost"] grid h-[18rem] grid-cols-1 bg-[#CBE175] mt-6 rounded-xl text-black content-between'>
-                    <div className='flex pl-6 pt-4 flex-col'>
+                {/* <ChartData data={weatherData}/> */}
+                <WeatherCard theme={{ backgroundColor: "#CBE175" }}>
+                    <ForecastContent>
                         <span className='text-2xl font-semibold'>Tomorrow</span>
                         <span className='text-lg'>{weatherData.name}</span>
-                    </div>
-                    {console.log(weatherData)}
-                    <div className='flex flex-col pl-6 pt-4 mt-2 mb-10'>
+                    </ForecastContent>
+                    <ForecastContent className='flex flex-col pl-6 pt-4 mt-2 mb-10'>
                         <span className='text-5xl font-semibold'>{Math.floor(weatherData.forecast.main.temp)}°C</span>
                         <span className='h-5 mt-2 text-black text-base'>{weatherData.forecast.weather[0].description}</span>
-                    </div>
-                </div>
+                    </ForecastContent>
+                </WeatherCard>
             </Main>
         }
-        <footer>
-            <nav className='nav-footer__link mt-2 flex justify-end'>
-                <a href="https://github.com/phelied/weathy" target="_blank" rel="noreferrer">
-                    <FontAwesomeIcon icon={faSquareGithub} />
-                </a>
-            </nav>
-        </footer>
     </AppContainer>);
 };
 
 const AppContainer = styled.div`
-  padding: 1rem;
+  padding: 0 1rem;
 `;
 
 const Header = styled.header`
@@ -294,7 +197,6 @@ const WeatherTemp = styled.div`
     padding-left: 0.5rem;
     flex-direction: row;
     align-items: center;
-    font-weight: 600;
 
   & span {
     background-color: white;
@@ -303,6 +205,7 @@ const WeatherTemp = styled.div`
     padding: 1px 0.5rem;
     border-radius: 0.375rem;
     font-weight: 600;
+    color: #1A2840
   }
 
   & h4 {
@@ -350,6 +253,30 @@ const WeatherStatCard = styled.div`
     line-height: 1.5rem;
     font-weight: 600;
   }
+`;
+
+const ProgressBarContainer = styled.div`
+margin: 2.5rem 0.75rem 0.5rem 0.5rem;
+border-radius: 0.75rem;
+background-color: white;
+color: #1A2840;
+padding: 0.75rem;
+
+& span {
+    font-size: 0.875rem;
+line-height: 1.25rem;
+font-weight: 600;
+}
+
+& span:nth-child(2) {
+    float: right;
+`;
+
+const ForecastContent = styled.div`
+display: flex;
+flex-direction: column;
+padding: 1rem 0 0 1.5rem; 
+
 `;
 
 export default Home;

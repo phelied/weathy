@@ -1,5 +1,4 @@
 import axios from "axios";
-import { defaultCity } from "./const";
 
 const API = {
     ApiListCities: async (city) => {
