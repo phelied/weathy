@@ -11,7 +11,7 @@ import API from "../utils/API";
 import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
+ 
 const Home = () => {
     const defaultCity = { 'lon': 2.3486, 'lat': 48.853401 };
     const [weatherData, setWeatherData] = useState([]);
