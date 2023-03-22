@@ -10,15 +10,15 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import API from "../utils/API";
 import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { calculateAQI } from "../utils/aqiCalculator";
 
- 
+
 const Home = () => {
     const defaultCity = { 'lon': 2.3486, 'lat': 48.853401 };
     const [weatherData, setWeatherData] = useState([]);
     const [error, setError] = useState("");
 
-    const getWeatherData = (data, cityName) => {
-        data['name'] = cityName;
+    const getWeatherData = (data) => {
         setWeatherData(data);
     };
 
@@ -28,32 +28,6 @@ const Home = () => {
             setWeatherData(data);
         });
     }, []);
-
-    function interpolate(value, min1, max1, min2, max2) {
-        return Math.round(((value - min1) * (max2 - min2)) / (max1 - min1) + min2);
-    }
-
-    function calculateAqi(pm25) {
-        let aqi = 0;
-        if (pm25 >= 0 && pm25 <= 12.0) {
-            aqi = interpolate(pm25, 0, 12.0, 0, 50);
-        } else if (pm25 > 12.0 && pm25 <= 35.4) {
-            aqi = interpolate(pm25, 12.1, 35.4, 51, 100);
-        } else if (pm25 > 35.4 && pm25 <= 55.4) {
-            aqi = interpolate(pm25, 35.5, 55.4, 101, 150);
-        } else if (pm25 > 55.4 && pm25 <= 150.4) {
-            aqi = interpolate(pm25, 55.5, 150.4, 151, 200);
-        } else if (pm25 > 150.4 && pm25 <= 250.4) {
-            aqi = interpolate(pm25, 150.5, 250.4, 201, 300);
-        } else if (pm25 > 250.4 && pm25 <= 350.4) {
-            aqi = interpolate(pm25, 250.5, 350.4, 301, 400);
-        } else if (pm25 > 350.4 && pm25 <= 500.4) {
-            aqi = interpolate(pm25, 350.5, 500.4, 401, 500);
-        } else {
-            aqi = "N/A";
-        }
-        return aqi;
-    }
 
     return (<AppContainer>
         <Header>
@@ -102,7 +76,7 @@ const Home = () => {
                     </WeatherCardContent>
                     <WeatherTempContainer>
                         <WeatherTemp>
-                            <h4>{calculateAqi(weatherData.air.components["pm2_5"])}</h4>
+                            <h4>{calculateAQI(weatherData.air.components["pm2_5"])}</h4>
                             <span>AQI</span>
                         </WeatherTemp>
                         <WeatherDescription className='text-white'>West Wind</WeatherDescription>

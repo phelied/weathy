@@ -7,11 +7,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import API from "../utils/API";
+import Geolocalisation from "./geolocalisation";
 
 const Search = ({ getWeatherData }) => {
   const [searchedData, setSearchedData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
-  const [city, setCity] = useState("");
 
   const clearInput = () => {
     setSearchedData([]);
@@ -28,13 +28,14 @@ const Search = ({ getWeatherData }) => {
         position.coords.latitude,
         position.coords.longitude
       ).then((cityName) => {
-        setCity(cityName);
+        API.ApiWeather(
+          position.coords.latitude,
+          position.coords.longitude
+        ).then((data) => {
+          data.name = cityName;
+          getWeatherData(data);
+        });
       });
-      API.ApiWeather(position.coords.latitude, position.coords.longitude).then(
-        (data) => {
-          getWeatherData(data, city);
-        }
-      );
     });
   }
 
@@ -70,7 +71,8 @@ const Search = ({ getWeatherData }) => {
 
   const handleClick = (cityName, latitude, longitude) => {
     API.ApiWeather(latitude, longitude).then((data) => {
-      getWeatherData(data, cityName);
+      data.name = cityName;
+      getWeatherData(data);
       clearInput();
     });
   };

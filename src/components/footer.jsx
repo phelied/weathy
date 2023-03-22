@@ -11,7 +11,6 @@ const Footer = () => {
           target="_blank"
           rel="noreferrer"
         >
-            me
           <FontAwesomeIcon icon={faSquareGithub} />
         </a>
       </nav>
