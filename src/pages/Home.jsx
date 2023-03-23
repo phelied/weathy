@@ -1,118 +1,138 @@
-
-import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloudSun, faWind } from '@fortawesome/free-solid-svg-icons';
-import Search from '../components/search';
-import ProgressBar from 'react-bootstrap/ProgressBar';
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCloudSun, faWind } from "@fortawesome/free-solid-svg-icons";
+import Search from "../components/search";
+import ProgressBar from "react-bootstrap/ProgressBar";
 // import ChartData from '../components/chartData';
 
-
 import API from "../utils/API";
-import styled from 'styled-components';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import styled from "styled-components";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { calculateAQI } from "../utils/aqiCalculator";
 
-
 const Home = () => {
-    const defaultCity = { 'lon': 2.3486, 'lat': 48.853401 };
-    const [weatherData, setWeatherData] = useState([]);
-    const [error, setError] = useState("");
+  const defaultCity = { lon: 2.3486, lat: 48.853401 };
+  const [weatherData, setWeatherData] = useState([]);
+  const [error, setError] = useState("");
 
-    const getWeatherData = (data) => {
-        setWeatherData(data);
-    };
+  const getWeatherData = (data) => {
+    setWeatherData(data);
+  };
 
-    useEffect(() => {
-        API.ApiWeather(defaultCity.lat, defaultCity.lon).then((data) => {
-            data.name = "Paris";
-            setWeatherData(data);
-        });
-    }, []);
+  useEffect(() => {
+    API.ApiWeather(defaultCity.lat, defaultCity.lon).then((data) => {
+      data.name = "Paris";
+      setWeatherData(data);
+    });
+  }, []);
 
-    return (<AppContainer>
-        <Header>
-            <Search getWeatherData={getWeatherData} />
-        </Header>
-        {error && <AlertDanger>{error}</AlertDanger>}
-        {weatherData && weatherData.length !== 0 &&
-            <Main>
-                <WeatherCard theme={{ backgroundColor: "#BEE6E6" }}>
-                    <WeatherCardContent>
-                        <WeatherIcon icon={faCloudSun} />
-                        <div className='flex pl-2 flex-col'>
-                            <span className='text-xl font-semibold'>{weatherData.name}</span>
-                            <span className='text-sm'>What&apos;s the weather ? </span>
-                        </div>
-                    </WeatherCardContent>
-                    <WeatherTempContainer>
-                        <WeatherTemp>
-                            <h4>{Math.floor(weatherData.main.temp)}°C</h4>
-                            <span>{Math.floor(weatherData.main.temp_max)}°C</span>
-                        </WeatherTemp>
-                        <WeatherDescription>{weatherData.weather[0].description}</WeatherDescription>
-                    </WeatherTempContainer>
-                    <WeatherStats>
-                        <WeatherStatCard theme={{ color: "white", backgroundColor: "#1A2840" }}>
-                            <h6>Pressure</h6>
-                            <h3>{weatherData.main.pressure} mb</h3>
-                        </WeatherStatCard>
-                        <WeatherStatCard theme={{ backgroundColor: "#CBE175" }}>
-                            <h6>Visibility</h6>
-                            <h3>{weatherData.visibility / 1000}km</h3>
-                        </WeatherStatCard>
-                        <WeatherStatCard theme={{ backgroundColor: "white" }}>
-                            <h6>Humidity</h6>
-                            <h3>{weatherData.main.humidity}%</h3>
-                        </WeatherStatCard>
-                    </WeatherStats>
-                </WeatherCard>
-                <WeatherCard theme={{ backgroundColor: "#55ADE2", color: "white" }}>
-                    <WeatherCardContent>
-                        <WeatherIcon icon={faWind} />
-                        <div className='flex pl-2 flex-col'>
-                            <span className='text-xl font-semibold'>Air Quality</span>
-                            <span className='text-sm'>What&apos;s the weather ? </span>
-                        </div>
-                    </WeatherCardContent>
-                    <WeatherTempContainer>
-                        <WeatherTemp>
-                            <h4>{calculateAQI(weatherData.air.components.pm2_5)}</h4>
-                            <span>AQI</span>
-                        </WeatherTemp>
-                        <WeatherDescription className='text-white'>West Wind</WeatherDescription>
-                    </WeatherTempContainer>
-                    <ProgressBarContainer>
-                        <span>Good</span>
-                        <span>Hazardous</span>
-                        <ProgressBar className='mt-2 h-2 text-black' variant="warning" animated now={weatherData.air.main.aqi * 20} />
-                    </ProgressBarContainer>
-                </WeatherCard>
-                {/* <ChartData data={weatherData}/> */}
-                <WeatherCard theme={{ backgroundColor: "#CBE175" }}>
-                    <ForecastContent>
-                        <span className='text-2xl font-semibold'>Tomorrow</span>
-                        <span className='text-lg'>{weatherData.name}</span>
-                    </ForecastContent>
-                    <ForecastContent className='flex flex-col pl-6 pt-4 mt-2 mb-10'>
-                        <span className='text-5xl font-semibold'>{Math.floor(weatherData.forecast.main.temp)}°C</span>
-                        <span className='h-5 mt-2 text-black text-base'>{weatherData.forecast.weather[0].description}</span>
-                    </ForecastContent>
-                </WeatherCard>
-            </Main>
-        }
-    </AppContainer>);
+  return (
+    <AppContainer>
+      <Header>
+        <Search getWeatherData={getWeatherData} />
+      </Header>
+      {error && <AlertDanger>{error}</AlertDanger>}
+      {weatherData && weatherData.length !== 0 && (
+        <Main>
+          <WeatherCard theme={{ backgroundColor: "#BEE6E6" }}>
+            <WeatherCardContent>
+              <WeatherIcon icon={faCloudSun} />
+              <div className="flex pl-2 flex-col">
+                <span className="text-xl font-semibold">
+                  {weatherData.name}
+                </span>
+                <span className="text-sm">What&apos;s the weather ? </span>
+              </div>
+            </WeatherCardContent>
+            <WeatherTempContainer>
+              <WeatherTemp>
+                <h4>{Math.floor(weatherData.main.temp)}°C</h4>
+                <span>{Math.floor(weatherData.main.temp_max)}°C</span>
+              </WeatherTemp>
+              <WeatherDescription>
+                {weatherData.weather[0].description}
+              </WeatherDescription>
+            </WeatherTempContainer>
+            <WeatherStats>
+              <WeatherStatCard
+                theme={{ color: "white", backgroundColor: "#1A2840" }}
+              >
+                <h6>Pressure</h6>
+                <h3>{weatherData.main.pressure} mb</h3>
+              </WeatherStatCard>
+              <WeatherStatCard theme={{ backgroundColor: "#CBE175" }}>
+                <h6>Visibility</h6>
+                <h3>{weatherData.visibility / 1000}km</h3>
+              </WeatherStatCard>
+              <WeatherStatCard theme={{ backgroundColor: "white" }}>
+                <h6>Humidity</h6>
+                <h3>{weatherData.main.humidity}%</h3>
+              </WeatherStatCard>
+            </WeatherStats>
+          </WeatherCard>
+          <WeatherCard theme={{ backgroundColor: "#55ADE2", color: "white" }}>
+            <WeatherCardContent>
+              <WeatherIcon icon={faWind} />
+              <div className="flex pl-2 flex-col">
+                <span className="text-xl font-semibold">Air Quality</span>
+                <span className="text-sm">What&apos;s the weather ? </span>
+              </div>
+            </WeatherCardContent>
+            <WeatherTempContainer>
+              <WeatherTemp>
+                <h4>{calculateAQI(weatherData.air.components)}</h4>
+                <span>AQI</span>
+              </WeatherTemp>
+              <WeatherDescription className="text-white">
+                West Wind
+              </WeatherDescription>
+            </WeatherTempContainer>
+            <ProgressBarContainer>
+              <span>Good</span>
+              <span>Hazardous</span>
+              <ProgressBar
+                className="mt-2 h-2 text-black"
+                variant="warning"
+                animated
+                now={
+                  weatherData.air.main.aqi === 1
+                    ? 1
+                    : weatherData.air.main.aqi * 20
+                }
+              />
+            </ProgressBarContainer>
+          </WeatherCard>
+          {/* <ChartData data={weatherData}/> */}
+          <WeatherCard theme={{ backgroundColor: "#CBE175" }}>
+            <ForecastContent>
+              <span className="text-2xl font-semibold">Tomorrow</span>
+              <span className="text-lg">{weatherData.name}</span>
+            </ForecastContent>
+            <ForecastContent className="flex flex-col pl-6 pt-4 mt-2 mb-10">
+              <span className="text-5xl font-semibold">
+                {Math.floor(weatherData.forecast.main.temp)}°C
+              </span>
+              <span className="h-5 mt-2 text-black text-base">
+                {weatherData.forecast.weather[0].description}
+              </span>
+            </ForecastContent>
+          </WeatherCard>
+        </Main>
+      )}
+    </AppContainer>
+  );
 };
 
 const AppContainer = styled.div`
   margin: 0 1rem;
-  font-family: 'Jost', sans-serif;
+  font-family: "Jost", sans-serif;
 `;
 
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 1rem ;
+  padding-top: 1rem;
   background-color: white;
   box-sizing: border-box;
 `;
@@ -121,26 +141,26 @@ const AlertDanger = styled.div`
   background-color: #f8d7da;
   border-color: #f5c6cb;
   color: #721c24;
-  padding: .75rem 1.25rem;
+  padding: 0.75rem 1.25rem;
   border: 1px solid transparent;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   margin: 1rem 0;
 `;
 
 const Main = styled.main`
   background-color: white;
-  color: #1A2840;
+  color: #1a2840;
 `;
 
 const WeatherCard = styled.div`
-  font-family: 'Jost', sans-serif;
+  font-family: "Jost", sans-serif;
   display: flex;
   flex-direction: column;
   height: max-content;
   border-radius: 1rem;
   margin-top: 1rem;
-  color: ${props => props.theme.color};
-  background-color: ${props => props.theme.backgroundColor};
+  color: ${(props) => props.theme.color};
+  background-color: ${(props) => props.theme.backgroundColor};
 `;
 
 const WeatherCardContent = styled.div`
@@ -153,24 +173,24 @@ const WeatherCardContent = styled.div`
 const WeatherIcon = styled(FontAwesomeIcon)`
   height: 1rem;
   background-color: white;
-  padding: 0.5rem 0.50rem;
+  padding: 0.5rem 0.5rem;
   border-radius: 9999px;
-  color: #FDAA67;
+  color: #fdaa67;
 `;
 
 const WeatherTempContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 0.5rem;
-  padding-top: 1.0rem;
+  padding-top: 1rem;
   margin-top: 0.5rem;
 `;
 
 const WeatherTemp = styled.div`
-    display: flex;
-    padding-left: 0.5rem;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  padding-left: 0.5rem;
+  flex-direction: row;
+  align-items: center;
 
   & span {
     background-color: white;
@@ -179,7 +199,7 @@ const WeatherTemp = styled.div`
     padding: 1px 0.5rem;
     border-radius: 0.375rem;
     font-weight: 600;
-    color: #1A2840
+    color: #1a2840;
   }
 
   & h4 {
@@ -213,8 +233,8 @@ const WeatherStatCard = styled.div`
   padding: 0.5rem 0;
   border-radius: 0.75rem;
 
-  background-color: ${props => props.theme.backgroundColor};
-  color: ${props => props.theme.color};
+  background-color: ${(props) => props.theme.backgroundColor};
+  color: ${(props) => props.theme.color};
 
   & h6 {
     font-size: 0.875rem;
@@ -247,10 +267,9 @@ font-weight: 600;
 `;
 
 const ForecastContent = styled.div`
-display: flex;
-flex-direction: column;
-padding: 1rem 0 0 1.5rem; 
-
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0 0 1.5rem;
 `;
 
 export default Home;
