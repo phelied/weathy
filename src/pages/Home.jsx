@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudSun, faWind } from '@fortawesome/free-solid-svg-icons';
 import Search from '../components/search';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+// import ChartData from '../components/chartData';
 
 
 import API from "../utils/API";
@@ -40,7 +41,7 @@ const Home = () => {
                         <WeatherIcon icon={faCloudSun} />
                         <div className='flex pl-2 flex-col'>
                             <span className='text-xl font-semibold'>{weatherData.name}</span>
-                            <span className='text-sm'>What's the weather ? </span>
+                            <span className='text-sm'>What&apos;s the weather ? </span>
                         </div>
                     </WeatherCardContent>
                     <WeatherTempContainer>
@@ -75,7 +76,7 @@ const Home = () => {
                     </WeatherCardContent>
                     <WeatherTempContainer>
                         <WeatherTemp>
-                            <h4>{calculateAQI(weatherData.air.components["pm2_5"])}</h4>
+                            <h4>{calculateAQI(weatherData.air.components.pm2_5)}</h4>
                             <span>AQI</span>
                         </WeatherTemp>
                         <WeatherDescription className='text-white'>West Wind</WeatherDescription>

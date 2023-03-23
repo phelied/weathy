@@ -10,6 +10,7 @@ const Footer = () => {
           href="https://github.com/phelied/weathy"
           target="_blank"
           rel="noreferrer"
+          tabIndex={-1}
         >
           <FontAwesomeIcon icon={faSquareGithub} />
         </a>

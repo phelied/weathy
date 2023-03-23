@@ -104,17 +104,18 @@ const Search = ({ getWeatherData }) => {
       </IconContainer>
       {searchedData && (
         <SelectData searchedData={searchedData}>
-          {searchedData.map((data) => (
-            <div
+          {searchedData.map((data, i) => (
+            <span
               key={data.city}
               className="search__select-data-item"
               onClick={() =>
                 handleClick(data.city, data.latitude, data.longitude)
               }
               role="button"
+              tabIndex={0}
             >
               {capitalizeFirstLetter(data.city)}, {data.country}
-            </div>
+            </span>
           ))}
         </SelectData>
       )}
@@ -122,7 +123,7 @@ const Search = ({ getWeatherData }) => {
   );
 };
 
-const SelectData = styled.div`
+const SelectData = styled.span`
   display: ${({ searchedData }) =>
     searchedData && searchedData.length !== 0 ? "block" : "none"};
   background-color: #fff;

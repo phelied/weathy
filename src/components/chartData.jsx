@@ -1,8 +1,8 @@
 import React from "react";
 import clouds from "../assets/images/clouds.png";
 import { Line } from "react-chartjs-2";
-import Chart from 'chart.js/auto';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+// import Chart from 'chart.js/auto';
+// import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 const ChartData = ({ weatherInfo }) => {
   const data = {
@@ -19,7 +19,7 @@ const ChartData = ({ weatherInfo }) => {
   return (
     <>
       <div className="text-[#1A2840] font-bold text-3xl mt-8">
-        <span>How's the</span>
+        <span>How&apos;s the</span>
         <br />
         <span>temperature today ? </span>
       </div>

@@ -47,7 +47,7 @@ const Geolocalisation = ({ getWeatherData }) => {
   };
 
   return (
-    <button onClick={askLocalisationUser} className="">
+    <button onClick={askLocalisationUser} tabIndex={-1}>
       <FontAwesomeIcon className="mr-2.5" icon={faLocationDot} />
     </button>
   );
