@@ -24,7 +24,7 @@ const Home = () => {
 
     useEffect(() => {
         API.ApiWeather(defaultCity.lat, defaultCity.lon).then((data) => {
-            data['name'] = "Paris";
+            data.name = "Paris";
             setWeatherData(data);
         });
     }, []);

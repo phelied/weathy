@@ -99,9 +99,10 @@ const Search = ({ getWeatherData }) => {
       />
       <IconContainer>
         <div>
-          <button onClick={askLocalisationUser} className="">
+          {/* <button onClick={askLocalisationUser} className="">
             <FontAwesomeIcon className="mr-2.5" icon={faLocationDot} />
-          </button>
+          </button> */}
+          < Geolocalisation getWeatherData={getWeatherData} />
           <FontAwesomeIcon
             className="text-[#FDAA67]"
             icon={faMagnifyingGlass}
