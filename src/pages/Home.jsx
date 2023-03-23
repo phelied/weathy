@@ -71,7 +71,7 @@ const Home = () => {
                         <WeatherIcon icon={faWind} />
                         <div className='flex pl-2 flex-col'>
                             <span className='text-xl font-semibold'>Air Quality</span>
-                            <span className='text-sm'>What's the weather ? </span>
+                            <span className='text-sm'>What&apos;s the weather ? </span>
                         </div>
                     </WeatherCardContent>
                     <WeatherTempContainer>
