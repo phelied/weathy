@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudSun, faWind } from '@fortawesome/free-solid-svg-icons';
 import Search from '../components/search';
-import "../assets/styles/home.css";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
 
@@ -105,6 +104,7 @@ const Home = () => {
 
 const AppContainer = styled.div`
   margin: 0 1rem;
+  font-family: 'Jost', sans-serif;
 `;
 
 const Header = styled.header`

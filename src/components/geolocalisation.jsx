@@ -34,7 +34,6 @@ const Geolocalisation = ({ getWeatherData }) => {
                 errorsLocalisationUser
               );
             } else if (result.state === "denied") {
-              console.log("denied");
               //If denied then you have to show instructions to enable location
             }
           });

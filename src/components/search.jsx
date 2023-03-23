@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "../assets/styles/search.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMagnifyingGlass,
-  faLocationDot,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import API from "../utils/API";
 import Geolocalisation from "./geolocalisation";
@@ -99,10 +95,7 @@ const Search = ({ getWeatherData }) => {
       />
       <IconContainer>
         <div>
-          {/* <button onClick={askLocalisationUser} className="">
-            <FontAwesomeIcon className="mr-2.5" icon={faLocationDot} />
-          </button> */}
-          < Geolocalisation getWeatherData={getWeatherData} />
+          <Geolocalisation getWeatherData={getWeatherData} />
           <FontAwesomeIcon
             className="text-[#FDAA67]"
             icon={faMagnifyingGlass}
