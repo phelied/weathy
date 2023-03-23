@@ -80,7 +80,7 @@ const Home = () => {
             </WeatherCardContent>
             <WeatherTempContainer>
               <WeatherTemp>
-                <h4>{calculateAQI(weatherData.air.components)}</h4>
+                <h4>{calculateAQI(weatherData.air.components.pm2_5)}</h4>
                 <span>AQI</span>
               </WeatherTemp>
               <WeatherDescription className="text-white">

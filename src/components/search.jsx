@@ -42,8 +42,9 @@ const Search = ({ getWeatherData }) => {
       <input
         type="text"
         className=" h-10 w-full p-1.5 rounded bg-[#F5F5F5] text-[#1A2840] placeholder-[#1A2840]"
-        placeholder="Search city ... "
+        placeholder="Search city ..."
         value={wordEntered}
+        data-testid="search-input"
         onChange={(e) => setWordEntered(e.target.value.trim())}
       />
       <IconContainer>
@@ -52,12 +53,13 @@ const Search = ({ getWeatherData }) => {
           <FontAwesomeIcon
             className="text-[#FDAA67]"
             icon={faMagnifyingGlass}
+            data-testid="font-awesome-icon"
           />
         </div>
       </IconContainer>
       {searchedData && (
         <SelectData searchedData={searchedData}>
-          {searchedData.map((data, i) => (
+          {searchedData.map((data) => (
             <span
               key={data.city}
               className="search__select-data-item"
