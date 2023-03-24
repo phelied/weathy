@@ -52,8 +52,7 @@
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://github.com/phelied/weathy/blob/main/src/assets/images/weathy-screen.png)
+<img src="https://github.com/phelied/weathy/blob/main/src/assets/images/weathy-screen.png" width="200" height="360">
 
 In this project I created a React weather app, which uses an API from openweathermap to get weather information all over the world and an other API to propose a list of cities in the search bar.
 
