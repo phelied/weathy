@@ -1,14 +1,13 @@
 import React from 'react';
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 import API from '../utils/API';
 import Search from './search';
 
 jest.mock("../utils/API", () => ({
     ApiListCities: jest.fn(() =>
         Promise.resolve([
-            , {
+            {
                 "id": 144571,
                 "wikiDataId": "Q90", "type": "CITY", "city": "Paris", "name": "Paris", "country": "France", "countryCode":
                     "FR", "region": "Île-de-France", "regionCode": "IDF", "regionWdId": "Q13917", "latitude": 48.8566, "longitude": 2.3522, "population": 2145906
