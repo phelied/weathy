@@ -117,12 +117,11 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 ## Roadmap
 
-- [x] Responsive
-- [x] Add Spline Design
+- [] Full Responsive
 - [x] Implement API
-- [ ] Implement 3DDesign which depends on local hour
-- [ ] Add Search Design
+- [x] Add Search Design
 - [ ] Testing
+- [ ] UV 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
