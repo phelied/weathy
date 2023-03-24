@@ -12,9 +12,6 @@
     "autoprefixer": "^10.4.13",
     "axios": "^1.1.2",
     "bootstrap": "^5.2.3",
-    "chart.js": "^4.2.0",
-    "chartjs-plugin-datalabels": "^2.2.0",
-    "chartjs-plugin-labels": "^1.1.0",
     "dotenv": "^16.0.3",
     "jest-transform-stub": "^2.0.0",
     "opencage-api-client": "^1.0.0",
@@ -31,7 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build --legacy-peer-deps",
     "test": "jest",
     "eject": "react-scripts eject"
   },
