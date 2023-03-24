@@ -117,7 +117,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 ## Roadmap
 
-- [] Full Responsive
+- [ ] Full Responsive
 - [x] Implement API
 - [x] Add Search Design
 - [ ] Testing
