@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build --legacy-peer-deps",
+    "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject"
   },
