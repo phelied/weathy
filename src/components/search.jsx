@@ -20,7 +20,6 @@ const Search = ({ getWeatherData }) => {
 
   const handleClick = (cityName, latitude, longitude) => {
     clearInput();
-    // console.log("cleared input: ", searchedData, wordEntered);
     API.ApiWeather(latitude, longitude).then((data) => {
       data.name = cityName;
       getWeatherData(data);
