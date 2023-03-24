@@ -34,7 +34,7 @@ const Home = () => {
       {error && <AlertDanger>{error}</AlertDanger>}
       {weatherData && weatherData.length !== 0 && (
         <Main>
-          <WeatherCard theme={{ backgroundColor: "#BEE6E6" }}>
+          <WeatherCard data-testid="current-weather" theme={{ backgroundColor: "#BEE6E6" }}>
             <WeatherCardContent>
               <WeatherIcon icon={faCloudSun} />
               <div className="flex pl-2 flex-col">
@@ -70,7 +70,7 @@ const Home = () => {
               </WeatherStatCard>
             </WeatherStats>
           </WeatherCard>
-          <WeatherCard theme={{ backgroundColor: "#55ADE2", color: "white" }}>
+          <WeatherCard data-testid="air-quality-container" theme={{ backgroundColor: "#55ADE2", color: "white" }}>
             <WeatherCardContent>
               <WeatherIcon icon={faWind} />
               <div className="flex pl-2 flex-col">
@@ -103,7 +103,7 @@ const Home = () => {
             </ProgressBarContainer>
           </WeatherCard>
           {/* <ChartData data={weatherData}/> */}
-          <WeatherCard theme={{ backgroundColor: "#CBE175" }}>
+          <WeatherCard data-testid="forecast-weather-container" theme={{ backgroundColor: "#CBE175" }}>
             <ForecastContent>
               <span className="text-2xl font-semibold">Tomorrow</span>
               <span className="text-lg">{weatherData.name}</span>

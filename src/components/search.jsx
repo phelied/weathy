@@ -19,10 +19,11 @@ const Search = ({ getWeatherData }) => {
   };
 
   const handleClick = (cityName, latitude, longitude) => {
+    clearInput();
+    // console.log("cleared input: ", searchedData, wordEntered);
     API.ApiWeather(latitude, longitude).then((data) => {
       data.name = cityName;
       getWeatherData(data);
-      clearInput();
     });
   };
 
@@ -38,7 +39,7 @@ const Search = ({ getWeatherData }) => {
   }, [wordEntered]);
 
   return (
-    <SearchContainer>
+    <SearchContainer data-testid="search-container">
       <input
         type="text"
         className=" h-10 w-full p-1.5 rounded bg-[#F5F5F5] text-[#1A2840] placeholder-[#1A2840]"
@@ -66,8 +67,8 @@ const Search = ({ getWeatherData }) => {
               onClick={() =>
                 handleClick(data.city, data.latitude, data.longitude)
               }
-              role="button"
               tabIndex={0}
+              data-testid="searched-data-item"
               aria-hidden="true"
             >
               {capitalizeFirstLetter(data.city)}, {data.country}

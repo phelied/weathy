@@ -50,8 +50,8 @@ const API = {
             .catch((error) => {
                 console.log('error', error.message);
             });
-            const response = await API.ApiWeather(latitude, longitude);
-            response.data.name = cityName;
+        const response = await API.ApiWeather(latitude, longitude);
+        response.data.name = cityName;
 
         return response;
     }
