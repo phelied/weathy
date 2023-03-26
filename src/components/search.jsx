@@ -49,7 +49,7 @@ const Search = ({ getWeatherData }) => {
       />
       <IconContainer>
         <div>
-          <Geolocalisation getWeatherData={getWeatherData} />
+          {/* <Geolocalisation getWeatherData={getWeatherData} /> */}
           <FontAwesomeIcon
             className="text-[#FDAA67]"
             icon={faMagnifyingGlass}

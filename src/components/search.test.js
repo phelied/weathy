@@ -142,7 +142,5 @@ describe('Search component', () => {
         expect(input.value).toBe("");
         results = screen.queryByTestId("searched-data-item");
         expect(results).toBe(null);
-
-
     });
 });

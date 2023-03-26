@@ -29,7 +29,7 @@ const API = {
         ];
         try {
             const [response, airPollution, forecastData] = await Promise.all(urls);
-            response.data.forecast = forecastData.data.list[16]
+            response.data.forecast = [forecastData.data.list[16], forecastData.data.list[38], forecastData.data.list[62]];
             response.data.air = airPollution.data.list[0]
             return (response.data);
         } catch (error) {

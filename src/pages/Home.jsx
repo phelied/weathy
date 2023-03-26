@@ -4,6 +4,7 @@ import { faCloudSun, faWind } from "@fortawesome/free-solid-svg-icons";
 import Search from "../components/search";
 import ProgressBar from "react-bootstrap/ProgressBar";
 // import ChartData from '../components/chartData';
+import Rain from "../assets/images/rain.png";
 
 import API from "../utils/API";
 import styled from "styled-components";
@@ -34,7 +35,10 @@ const Home = () => {
       {error && <AlertDanger>{error}</AlertDanger>}
       {weatherData && weatherData.length !== 0 && (
         <Main>
-          <WeatherCard data-testid="current-weather" theme={{ backgroundColor: "#BEE6E6" }}>
+          <WeatherCard
+            data-testid="current-weather"
+            theme={{ backgroundColor: "#BEE6E6" }}
+          >
             <WeatherCardContent>
               <WeatherIcon icon={faCloudSun} />
               <div className="flex pl-2 flex-col">
@@ -70,7 +74,10 @@ const Home = () => {
               </WeatherStatCard>
             </WeatherStats>
           </WeatherCard>
-          <WeatherCard data-testid="air-quality-container" theme={{ backgroundColor: "#55ADE2", color: "white" }}>
+          <WeatherCard
+            data-testid="air-quality-container"
+            theme={{ backgroundColor: "#55ADE2", color: "white" }}
+          >
             <WeatherCardContent>
               <WeatherIcon icon={faWind} />
               <div className="flex pl-2 flex-col">
@@ -87,7 +94,7 @@ const Home = () => {
                 West Wind
               </WeatherDescription>
             </WeatherTempContainer>
-            <ProgressBarContainer>
+            <AirQualityProgressBar>
               <span>Good</span>
               <span>Hazardous</span>
               <ProgressBar
@@ -100,22 +107,54 @@ const Home = () => {
                     : weatherData.air.main.aqi * 20
                 }
               />
-            </ProgressBarContainer>
+            </AirQualityProgressBar>
           </WeatherCard>
           {/* <ChartData data={weatherData}/> */}
-          <WeatherCard data-testid="forecast-weather-container" theme={{ backgroundColor: "#CBE175" }}>
-            <ForecastContent>
-              <span className="text-2xl font-semibold">Tomorrow</span>
-              <span className="text-lg">{weatherData.name}</span>
-            </ForecastContent>
-            <ForecastContent className="flex flex-col pl-6 pt-4 mt-2 mb-10">
-              <span className="text-5xl font-semibold">
-                {Math.floor(weatherData.forecast.main.temp)}°C
-              </span>
-              <span className="h-5 mt-2 text-black text-base">
-                {weatherData.forecast.weather[0].description}
-              </span>
-            </ForecastContent>
+          <WeatherCard
+            data-testid="forecast-weather-container"
+            theme={{ backgroundColor: "#CBE175" }}
+          >
+            <img className="rain" src={Rain} />
+
+            <div>
+              <ForecastContent>
+                <span className="text-2xl font-semibold">Tomorrow</span>
+                <span className="text-lg">{weatherData.name}</span>
+              </ForecastContent>
+              <ForecastContent className="flex flex-col pl-6 pt-4 mt-2 mb-10">
+                <span className="text-5xl font-semibold">
+                  {Math.floor(weatherData.forecast[0].main.temp)}°C
+                </span>
+                <span className="h-5 mt-2 text-black text-base">
+                  {weatherData.forecast[0].weather[0].description}
+                </span>
+              </ForecastContent>
+            </div>
+            <WeatherDaysContainer className="flex flex-col">
+              {weatherData.forecast.slice(1).map((day, index) => (
+                <WeatherDayContent
+                  key={index}
+                  className=" font-semibold bg-white"
+                >
+                  <img
+                    src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                  />
+                  <WeatherDescriptionContainer className="flex flex-col">
+                    <span className="">
+                      {new Intl.DateTimeFormat("fr-FR", {
+                        month: "long",
+                      }).format(new Date(day.dt_txt)) +
+                        " " +
+                        new Date(day.dt_txt).getDate()}
+                    </span>
+                    {day.weather[0].description}
+                  </WeatherDescriptionContainer>
+                  <span className="text-[#fdaa67] place-self-end">{`${Math.floor(
+                    day.main.temp_min
+                  )}° / ${Math.floor(day.main.temp_max)}°`}</span>
+                </WeatherDayContent>
+              ))}
+            </WeatherDaysContainer>
           </WeatherCard>
         </Main>
       )}
@@ -150,17 +189,29 @@ const AlertDanger = styled.div`
 const Main = styled.main`
   background-color: white;
   color: #1a2840;
+  position: relative;
 `;
 
 const WeatherCard = styled.div`
   font-family: "Jost", sans-serif;
   display: flex;
+  z-index: -1;
   flex-direction: column;
   height: max-content;
   border-radius: 1rem;
   margin-top: 1rem;
   color: ${(props) => props.theme.color};
   background-color: ${(props) => props.theme.backgroundColor};
+
+  & .rain {
+    position: absolute;
+    z-index: 1;
+    height: 28%;
+    object-fit: cover;
+    bottom: 16%;
+    left: 47%;
+    width: 57%;
+  }
 `;
 
 const WeatherCardContent = styled.div`
@@ -249,7 +300,7 @@ const WeatherStatCard = styled.div`
   }
 `;
 
-const ProgressBarContainer = styled.div`
+const AirQualityProgressBar = styled.div`
 margin: 2.5rem 0.75rem 0.5rem 0.5rem;
 border-radius: 0.75rem;
 background-color: white;
@@ -270,6 +321,38 @@ const ForecastContent = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 0 0 1.5rem;
+  position: relative;
+  z-index: 9999;
+`;
+
+const WeatherDaysContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 1rem;
+  margin-bottom: 1rem;
+  z-index: 3;
+`;
+
+const WeatherDayContent = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 3fr 1.5fr;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.5rem;
+  margin-bottom: 0.75rem;
+`;
+const WeatherDescriptionContainer = styled.div`
+  display: grid;
+  flex-direction: column;
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+  align-content: space-between;
+
+  & span {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    color: #b8bbc2;
+  }
 `;
 
 export default Home;
